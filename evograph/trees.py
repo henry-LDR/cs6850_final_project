@@ -32,6 +32,61 @@ def yule_tree(n_tips, birth=1.0, rng=None):
     return np.array(parent), end - np.array(start)
 
 
+def read_newick(text):
+    """Parse a Newick string into (parent, length, names), numbering parents before children.
+
+    Internal-node labels (such as bootstrap values) are kept in names; nodes
+    without a label get "".
+    """
+    text = text.strip().rstrip(";").strip()
+    parent, length, names = [], [], []
+    stack, cur, i = [], None, 0
+
+    def new(p):
+        parent.append(p)
+        length.append(0.0)
+        names.append("")
+        return len(parent) - 1
+
+    while i < len(text):
+        c = text[i]
+        if c == "(":
+            stack.append(new(stack[-1] if stack else -1))
+            cur = None
+            i += 1
+        elif c == ",":
+            cur = None
+            i += 1
+        elif c == ")":
+            cur = stack.pop()
+            i += 1
+        elif c.isspace():
+            i += 1
+        else:
+            if cur is None:
+                cur = new(stack[-1] if stack else -1)
+            if c == ":":
+                j = i + 1
+                while j < len(text) and text[j] not in ",()":
+                    j += 1
+                length[cur] = float(text[i + 1 : j])
+            else:
+                j = i
+                while j < len(text) and text[j] not in ",():":
+                    j += 1
+                names[cur] = text[i:j].strip().strip("'\"")
+            i = j
+    return np.array(parent), np.array(length), names
+
+
+def rescale(length, parent, height=1.0):
+    """Scale branch lengths so the deepest tip sits at the given height above the root."""
+    depth = np.zeros(len(parent))
+    for v in range(1, len(parent)):
+        depth[v] = depth[parent[v]] + length[v]
+    return length * (height / depth.max())
+
+
 def tips(parent):
     """Indices of the tips (nodes that are nobody's parent)."""
     parent = np.asarray(parent)

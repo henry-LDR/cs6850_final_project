@@ -1,0 +1,21 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Project Roadmap: How Traversable Is the Space of Body Plans?}\\[3pt]
+Henry Ji and Calvin Zhang \quad CS/INFO 6850 \quad November 16, 2026
+\end{center}
+
+We will model evolution as a biased random walk on a state graph whose nodes are combinations of $k$ binary traits and whose edges are single trait changes, so the base graph is the hypercube $\{0,1\}^k$. Developmental constraints delete edges at random, selection biases the walk, and a phylogeny records how lineages' walks branched. A trait path is one such walk. Coding (wide carapace, folded abdomen, reinforced shell, sideways gait), one route from a lobster-like to a crab-like body is $0000 \to 0100 \to 1100 \to 1110 \to 1111$; a lizard reaches a snake-like body through elongation, then digit loss, then limb loss.
+
+The question is how traversable this space is, asked through all three course units. For random graphs and small worlds, we will study percolation on the constrained hypercube, whose giant component appears near $p = 1/k$ (Ajtai, Koml\'os and Szemer\'edi 1982), and hitting times to adaptive states as measures of robustness and evolvability. For cascades, we will model developmental integration as a threshold process on a trait-dependency graph, and gene transfer between bacteria as contagion. For spectral analysis, the stationary distribution locates attractors such as the crab body plan, the Fiedler vector finds basins, and Cheeger-type bounds for nonreversible chains (Fill 1991) locate choke points.
+
+The data are groups with many independent origins: snake-like squamates (about 25 origins in 261 species; Wiens et al.\ 2006), C4 photosynthesis (16 traits over 73 species, so 65,536 states; Williams et al.\ 2013), decapod crabs (at least five origins and seven losses; Wolfe et al.\ 2021), and about 15,000 bacterial species with traits (Madin et al.\ 2020). Simulations on hypercubes of up to a million states validate every estimator. The November 23 slides will show the simulations and a first squamate fit, and the final write-up will compare traversability across all four groups.
+
+\end{document}

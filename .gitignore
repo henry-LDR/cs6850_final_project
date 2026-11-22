@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Data and course readings stay local
+data/raw/
+data/processed/
+readings/
+
+# LaTeX build files
+docs/*.aux
+docs/*.log
+docs/*.out

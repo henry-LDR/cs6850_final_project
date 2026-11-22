@@ -3,14 +3,35 @@
 The likelihood comes from Felsenstein's pruning algorithm. Moving a
 partial-likelihood vector up a branch of length t multiplies it by exp(Q t),
 which expm_multiply computes with sparse matrix-vector products, so 10 traits
-(1,024 states) take about a second per evaluation.
+(1,024 states) take about a second per evaluation. Small state spaces
+(at most DENSE_LIMIT states) compute every branch's exp(Q t) in one batched
+call instead, which is much faster.
 """
 
 import numpy as np
+import scipy.linalg as sla
 import scipy.optimize as opt
 import scipy.sparse.linalg as spla
 
 from .walks import TraitModel
+
+DENSE_LIMIT = 64
+
+
+def _propagator(Q, lengths, dense_limit):
+    """Return f(v, t, L) = exp(Q t) L for the branch above node v, of length t.
+
+    Small state spaces precompute every branch's exp(Q t) in one batched scipy
+    expm call. (Diagonalizing Q is faster still but its eigenvectors can be
+    ill-conditioned, which makes the likelihood too noisy for finite-difference
+    gradients.)
+    """
+    if Q.shape[0] > dense_limit:
+        return lambda v, t, L: spla.expm_multiply(Q * t, L)
+    nodes = [v for v, t in lengths.items() if t > 0]
+    A = Q.toarray()
+    mats = dict(zip(nodes, sla.expm(A[None] * np.array([lengths[v] for v in nodes])[:, None, None]))) if nodes else {}
+    return lambda v, t, L: mats[v] @ L
 
 
 def tip_vector(observation, k):
@@ -21,7 +42,7 @@ def tip_vector(observation, k):
     return (bits[:, known] == obs[known]).all(axis=1).astype(float)
 
 
-def log_likelihood(model, parent, length, tip_vectors, root_state=0):
+def log_likelihood(model, parent, length, tip_vectors, root_state=0, dense_limit=DENSE_LIMIT):
     """Log-likelihood of the tip data. tip_vectors maps node index to a partial likelihood;
     nodes absent from it carry no data. The root starts in root_state."""
     Q = model.generator().tocsc()
@@ -33,6 +54,7 @@ def log_likelihood(model, parent, length, tip_vectors, root_state=0):
             informative[v] = True
         if informative[v] and parent[v] >= 0:
             informative[parent[v]] = True
+    propagate = _propagator(Q, {v: length[v] for v in range(n) if informative[v] and parent[v] >= 0}, dense_limit)
     acc = np.ones((n, N))
     logscale = 0.0
     for v in range(n - 1, -1, -1):
@@ -46,7 +68,7 @@ def log_likelihood(model, parent, length, tip_vectors, root_state=0):
         logscale += np.log(s)
         if parent[v] < 0:
             return float(np.log(L[root_state]) + logscale) if L[root_state] > 0 else -np.inf
-        msg = spla.expm_multiply(Q * length[v], L) if length[v] > 0 else L
+        msg = propagate(v, length[v], L) if length[v] > 0 else L
         acc[parent[v]] *= np.maximum(msg, 0.0)
     raise ValueError("tree has no root")
 

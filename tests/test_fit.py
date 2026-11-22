@@ -42,3 +42,15 @@ def test_fit_recovers_rates_from_a_simulated_tree():
     result = fit.fit_trait_model(k, parent, length, data, fit_gamma=False)
     assert result["gain"] == pytest.approx(truth.r_gain, rel=0.5)
     assert result["loss"] == pytest.approx(0.4, rel=0.6)
+
+
+def test_dense_and_sparse_paths_agree():
+    rng = np.random.default_rng(3)
+    k = 3
+    model = walks.TraitModel([0.6, 0.4, 0.3], [0.2] * 3, gamma=0.7, D=np.ones((k, k)) - np.eye(k))
+    parent, length = trees.yule_tree(40, rng=rng)
+    states = trees.simulate(model, parent, length, 0, rng=rng)
+    data = {v: fit.tip_vector([(states[v] >> i) & 1 for i in range(k)], k) for v in trees.tips(parent)}
+    dense = fit.log_likelihood(model, parent, length, data)
+    sparse = fit.log_likelihood(model, parent, length, data, dense_limit=0)
+    assert np.isclose(dense, sparse, rtol=1e-6)

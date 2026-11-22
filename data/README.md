@@ -2,6 +2,18 @@
 
 Raw downloads go in `data/raw/` and cleaned tables in `data/processed/`; both are git-ignored, so record every download here.
 
+`python data/fetch.py` downloads everything marked **fetched** below, pinned to fixed commits so results are reproducible. Our shared compute can only reach GitHub, so datasets hosted on Dryad, figshare or journal sites have to be downloaded by hand into `data/raw/`.
+
+## In use now
+
+| Group | File in `data/raw/` | What it holds | Source |
+| --- | --- | --- | --- |
+| *M. tuberculosis* (first real fit) | `tb_tree.nwk`, `tb_resistance.csv` | Phylogeny of 1,000+ isolates; resistance to 10 drugs (INH, RIF, PZA, EMB, STR, AMI, CAP, MOX, OFL, PRO) for 395 of them, 93 distinct profiles | Casali et al. (2014), *Nature Genetics* 46, 279–286, as curated in the [HyperTraPS-CT repository](https://github.com/StochasticBiology/hypertraps-ct) — **fetched** |
+| C4 plants | `c4_traits.csv`, `c4_trait_names.txt` | 16 C4 traits for 37 lineages, coded 0, 1, or 2 for unknown; no tree | Williams et al. (2013), *eLife* 2, e00961, as curated in the HyperTraPS-CT repository — **fetched** |
+| Bacteria | `bacteria_traits_gtdb.csv` | 11,265 species with phenotypes and GTDB taxonomy | [Madin et al. (2020), *Scientific Data* 7, 170](https://github.com/bacteria-archaea-traits/bacteria-archaea-traits) — **fetched** |
+
+## Planned
+
 | Group | What we use | Size | Source |
 | --- | --- | --- | --- |
 | Squamates (main test) | Snake-like body form, digit and limb counts, phylogeny | About 25 origins among 261 species | Wiens, Brandley and Reeder (2006), *Evolution* 60, 123–141; body-part data for six clades in [Bergmann and Morinaga (2019), Dryad](https://datadryad.org/dataset/doi:10.5061/dryad.5rh14nc) |

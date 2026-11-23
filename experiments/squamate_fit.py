@@ -36,6 +36,7 @@ spreadsheet to data/raw/squamate_traits.xlsx.
 
 import itertools
 import json
+import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -71,43 +72,57 @@ FREE[1, 2] = FREE[2, 1] = False
 KEEP = np.array([[valid(x ^ (1 << i)) and valid(x) for i in range(K)] for x in range(2**K)])
 
 
+# Which tree: the Title et al. (2024) time tree (default, with the merged trait data from
+# data/build_squamates.py) or "zw2016" (the Zheng and Wiens 2016 tree with the original
+# convergence dataset alone), for robustness checks. Results for zw2016 get a suffix.
+TREE = os.environ.get("SQUAMATE_TREE", "title2024")
+SUFFIX = "" if TREE == "title2024" else f"_{TREE}"
+
+
 def load_tree():
-    zw = RAW / "squamate_tree_zw2016.nexus"
-    if zw.exists():
-        parent, length, names = trees.read_nexus(zw.read_text())
-        # Keep Lepidosauria (tuatara + squamates); the file also has turtles, birds and crocodilians
-        tip = {names[v]: v for v in trees.tips(parent)}
-        root = trees.mrca(parent, [tip["Sphenodon_punctatus"], tip["Dibamus_bourreti"], tip["Python_regius"] if "Python_regius" in tip else tip["Iguana_iguana"]])
-        parent, length, names = trees.subtree(parent, length, names, root)
-        source = "Zheng and Wiens (2016)"
-    else:
-        parent, length, names = trees.read_newick((RAW / "squamate_tree_provisional.tre").read_text())
-        source = "provisional (github.com/uyedaj/bmr datasets/squa.tre)"
-    return parent, np.asarray(length) / 100.0, names, source
+    if TREE == "title2024":
+        parent, length, names = trees.read_newick((RAW / "squamate_tree_title2024.tre").read_text())
+        return parent, np.asarray(length) / 100.0, names, "Title et al. (2024)"
+    parent, length, names = trees.read_nexus((RAW / "squamate_tree_zw2016.nexus").read_text())
+    # Keep Lepidosauria (tuatara + squamates); the file also has turtles, birds and crocodilians
+    tip = {names[v]: v for v in trees.tips(parent)}
+    root = trees.mrca(parent, [tip["Sphenodon_punctatus"], tip["Dibamus_bourreti"], tip["Iguana_iguana"]])
+    parent, length, names = trees.subtree(parent, length, names, root)
+    return parent, np.asarray(length) / 100.0, names, "Zheng and Wiens (2016)"
+
+
+def load_species(node):
+    """One row per tree tip with data: digits, presacrals, fossorial (0/1), family, snake."""
+    if TREE == "title2024":
+        d = pd.read_csv(Path("data/processed/squamates_merged.csv"))
+        return d[d.tip.isin(node)].reset_index(drop=True)
+    d = pd.read_excel(RAW / "squamate_traits.xlsx", sheet_name="Dataset")
+    d["tip"] = [tip_name(s, c, node) for s, c in zip(d.Species, d["Changes to Zheng & Wiens (2016)"])]
+    d = d[d.tip.apply(lambda x: isinstance(x, str))].drop_duplicates("tip").reset_index(drop=True)
+    d["digits"] = pd.to_numeric(d.Digits, errors="coerce")
+    d["presacrals"] = pd.to_numeric(d.Presacrals, errors="coerce")
+    d["fossorial"] = (d["Habitat (4)"] == "Fossorial").astype(float).where(d["Habitat (4)"].notna())
+    d["family"] = d["Clade (14)"]
+    d["snake"] = d["Clade (14)"] == "Serpentes"
+    return d
 
 
 def code(d):
-    digits = pd.to_numeric(d.Digits, errors="coerce")
-    pres = pd.to_numeric(d.Presacrals, errors="coerce")
-    col = lambda s, f: np.where(s.isna(), 2, f(s).astype(int))
+    col = lambda s, f: np.where(s.isna(), 2, f(s.fillna(0)).astype(int))
     return np.c_[
-        col(pres, lambda s: s >= 35),
-        col(digits, lambda s: s < 10),
-        col(digits, lambda s: s == 0),
-        (d["Habitat (4)"] == "Fossorial").astype(int).to_numpy(),
+        col(d.presacrals, lambda s: s >= 35),
+        col(d.digits, lambda s: s < 10),
+        col(d.digits, lambda s: s == 0),
+        col(d.fossorial, lambda s: s == 1),
     ]
 
 
 def load():
     parent, length, names, source = load_tree()
-    d = pd.read_excel(RAW / "squamate_traits.xlsx", sheet_name="Dataset")
-    X = code(d)
     node = {names[v]: v for v in trees.tips(parent)}
-    d["tip"] = [tip_name(s, c, node) for s, c in zip(d.Species, d["Changes to Zheng & Wiens (2016)"])]
-    obs = {}
-    for i, s in enumerate(d.tip):
-        if isinstance(s, str) and node[s] not in obs:  # a stand-in tip used for two species keeps the first
-            obs[node[s]] = X[i].tolist()
+    d = load_species(node)
+    X = code(d)
+    obs = {node[s]: X[i].tolist() for i, s in enumerate(d.tip)}
     return parent, length, obs, d, X, source
 
 
@@ -170,7 +185,7 @@ def routes_to_snake(Q, start=0, runs=40000, seed=0):
 def main(reuse):
     OUT.mkdir(exist_ok=True)
     parent, length, obs, d, X, source = load()
-    params = OUT / "squamate_fit_params.json"
+    params = OUT / f"squamate_fit_params{SUFFIX}.json"
     if reuse and params.exists():
         saved = json.loads(params.read_text())
     else:
@@ -206,7 +221,6 @@ def main(reuse):
     known = (X != 2).all(axis=1)
     summary = {
         "tree": source,
-        "species_in_dataset": int(len(d)),
         "species_on_tree": int(len(obs)),
         "species_fully_coded": int(known.sum()),
         "trait_frequencies": {TRAITS[i]: round(float((X[:, i][X[:, i] != 2]).mean()), 3) for i in range(K)},
@@ -229,7 +243,7 @@ def main(reuse):
         "bottleneck_side": [label(x) for x in side],
         "bottleneck_other_side": [label(x) for x in other],
     }
-    (OUT / "squamate_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    (OUT / f"squamate_summary{SUFFIX}.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     plot(G, order, p["loglik"] - a["loglik"])
 
@@ -281,7 +295,7 @@ def plot(G, order, gain):
     for s in ("left", "bottom"):
         b.spines[s].set_color("#b5b4ae")
     fig.tight_layout()
-    fig.savefig(OUT / "squamate_fit.png", facecolor=fig.get_facecolor())
+    fig.savefig(OUT / f"squamate_fit{SUFFIX}.png", facecolor=fig.get_facecolor())
 
 
 if __name__ == "__main__":

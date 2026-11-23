@@ -1,7 +1,9 @@
 """Squamate species network: small-world structure and convergence bottlenecks.
 
-Nodes: the 918 squamate species with both digit and presacral-vertebra counts that
-sit on the Zheng and Wiens (2016) tree.
+Nodes: squamate species with both digit and presacral-vertebra counts on the tree
+(data/build_squamates.py merges five sources onto the Title et al. 2024 tree). By
+default snakes are left out (NETWORK_SPECIES=all keeps them): every snake descends from
+one snake-like ancestor, so they are a single origin and would swamp the network.
 
 Two kinds of links:
   relatives    each species to its 6 closest relatives on the tree (most recent
@@ -25,6 +27,7 @@ squamate files, see data/README.md).
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 
 import matplotlib
@@ -51,16 +54,22 @@ LINEAGE_AGE = 50  # Myr: species whose ancestry splits longer ago count as separ
 OUT = Path("results")
 
 
+# Which species: "all" (lizards and snakes) or "lizards" (snakes left out: every snake descends
+# from one snake-like ancestor, so they are one origin, and 952 of them would swamp the network).
+SPECIES_SET = os.environ.get("NETWORK_SPECIES", "lizards")
+SUFFIX = sq.SUFFIX + ("" if SPECIES_SET == "lizards" else f"_{SPECIES_SET}")
+
+
 def load():
     parent, length, names, _ = sq.load_tree()
     length = np.asarray(length) * 100  # Myr
-    d = pd.read_excel(sq.RAW / "squamate_traits.xlsx", sheet_name="Dataset")
     node = {names[v]: v for v in trees.tips(parent)}
-    d["tip"] = [sq.tip_name(s, c, node) for s, c in zip(d.Species, d["Changes to Zheng & Wiens (2016)"])]
-    for c in ("Digits", "Presacrals"):
-        d[c] = pd.to_numeric(d[c], errors="coerce")
-    d = d[d.tip.apply(lambda x: isinstance(x, str)) & d.Digits.notna() & d.Presacrals.notna()]
-    d = d.drop_duplicates("tip").reset_index(drop=True)
+    d = sq.load_species(node)
+    d = d[d.digits.notna() & d.presacrals.notna()]
+    if SPECIES_SET == "lizards":
+        d = d[~d.snake.astype(bool)]
+    d = d.reset_index(drop=True)
+    d["Digits"], d["Presacrals"] = d.digits, d.presacrals
     # age of the most recent common ancestor of every pair: shared path length from the root
     rows, cols = [], []
     for r, v in enumerate(node[t] for t in d.tip):
@@ -133,8 +142,8 @@ def describe(d, idx, lineage):
     return {"species": int(len(idx)),
             "digits_range": [int(s.Digits.min()), int(s.Digits.max())], "digits_median": float(s.Digits.median()),
             "presacrals_range": [int(s.Presacrals.min()), int(s.Presacrals.max())], "presacrals_median": float(s.Presacrals.median()),
-            "fossorial_share": round(float((s["Habitat (4)"] == "Fossorial").mean()), 3),
-            "clades": int(s["Clade (14)"].nunique()), "clade_counts": s["Clade (14)"].value_counts().to_dict(),
+            "fossorial_share": round(float(s.fossorial.mean()), 3),
+            "families": int(s.family.nunique()), "family_counts": s.family.value_counts().to_dict(),
             "lineages_split_over_50_Myr": int(len(set(lineage[idx])))}
 
 
@@ -162,7 +171,9 @@ def main():
                                "derived_species": int(derived.sum())}
 
     W = kernel_graph(form, H)
-    snake_side, limbed, phi = cheeger(W, np.arange(n))
+    nc, lab = cg.connected_components(sp.csr_matrix(W), directed=False)
+    giant = np.flatnonzero(lab == np.bincount(lab).argmax())
+    snake_side, limbed, phi = cheeger(W, giant)
     br = bridge(W, snake_side, limbed)
     inner_small, inner_rest, phi2 = cheeger(W, snake_side)
     lsmall, lrest, phi_limbed = cheeger(W, limbed)
@@ -174,25 +185,29 @@ def main():
         a, b, p = cheeger(Wh, idx)
         robustness[str(h)] = {"conductance": round(p, 5), "small_side": int(len(a)),
                               "small_side_digits_max": int(d.Digits.iloc[a].max()),
-                              "small_side_clades": int(d["Clade (14)"].iloc[a].nunique()),
+                              "small_side_presacrals_median": float(d.Presacrals.iloc[a].median()),
+                              "small_side_families": int(d.family.iloc[a].nunique()),
                               "species_in_graph": int(len(idx))}
 
     summary = {
         "species": n,
+        "species_set": SPECIES_SET,
+        "tree": sq.TREE,
+        "species_in_kernel_graph": int(len(giant)),
         "small_world": sw,
         "convergence_bottleneck": {
             "conductance": phi,
             "next_best_cut_among_limbed_conductance": phi_limbed,
             "snake_like_side": describe(d, snake_side, lineage),
             "limbed_side": describe(d, limbed, lineage),
-            "bridge_species": describe(d, br, lineage) | {"names": d.Species.iloc[br].tolist()},
+            "bridge_species": describe(d, br, lineage) | {"names": d.tip.iloc[br].tolist()},
             "second_cut_inside_snake_like_side": {"conductance": phi2, "small_side": describe(d, inner_small, lineage)},
         },
         "bandwidth_robustness": robustness,
     }
-    (OUT / "species_network.json").write_text(json.dumps(summary, indent=2))
+    (OUT / f"species_network{SUFFIX}.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))
-    np.savez(OUT / "species_network_cut.npz", snake=snake_side, bridge=br)
+    np.savez(OUT / f"species_network_cut{SUFFIX}.npz", snake=snake_side, bridge=br)
     plot(d, snake_side, br, phi, phi_limbed, describe(d, snake_side, lineage), describe(d, br, lineage))
 
 
@@ -209,7 +224,7 @@ def plot(d, snake_side, br, phi, phi_limbed, snake_desc, bridge_desc):
     ax.set_facecolor("#fcfcfb")
     ax.scatter(x[side == 0], y[side == 0], s=9, color="#b5b4ae", alpha=0.6, lw=0, label=f"Limbed lizards ({(side == 0).sum()})")
     ax.scatter(x[side == 1], y[side == 1], s=11, color="#2a78d6", alpha=0.8, lw=0,
-               label=f"Snake-like community ({snake_desc['species']} species, {snake_desc['clades']} clades)")
+               label=f"Snake-like community ({snake_desc['species']} species, {snake_desc['families']} families)")
     ax.scatter(x[is_bridge], y[is_bridge], s=34, facecolor="none", edgecolor="#e34948", lw=1.2,
                label=f"Bridge species ({bridge_desc['species']}, from {bridge_desc['lineages_split_over_50_Myr']} lineages)")
     ax.set_xscale("log")
@@ -230,7 +245,7 @@ def plot(d, snake_side, br, phi, phi_limbed, snake_desc, bridge_desc):
     ax.legend(fontsize=7, frameon=False, loc="upper right")
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"species_network.{ext}", facecolor=fig.get_facecolor())
+        fig.savefig(OUT / f"species_network{SUFFIX}.{ext}", facecolor=fig.get_facecolor())
 
 
 if __name__ == "__main__":

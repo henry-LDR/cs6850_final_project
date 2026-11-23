@@ -1,109 +1,109 @@
 {
   "maps": 100,
-  "branch_paths_that_fell_back": 0,
+  "branch_paths_that_fell_back": 15,
   "independent_snake_like_origins_per_history": {
-    "median": 36.0,
+    "median": 47.0,
     "range": [
-      30,
-      44
+      38,
+      64
     ]
   },
   "journey_from_ordinary_lizard_to_snake_like_Myr": {
-    "median": 37.65921259068872,
+    "median": 37.00294235282509,
     "quartiles": [
-      20.9,
-      56.0
+      20.1,
+      57.8
     ]
   },
   "departure_Myr_before_present": {
-    "median": 57.83975406435715,
+    "median": 49.993283207938035,
     "quartiles": [
-      31.0,
-      86.6
+      29.6,
+      101.8
     ]
   },
   "time_in_each_state_on_journeys_Myr": {
     "R": {
-      "median": 9.12,
-      "mean": 11.81,
-      "visits": 2572
-    },
-    "ER": {
-      "median": 4.78,
-      "mean": 7.7,
-      "visits": 4055
-    },
-    "ERF": {
-      "median": 4.43,
-      "mean": 8.25,
-      "visits": 4779
-    },
-    "E": {
-      "median": 3.02,
-      "mean": 5.84,
-      "visits": 5651
+      "median": 4.88,
+      "mean": 8.86,
+      "visits": 900
     },
     "F": {
-      "median": 2.58,
-      "mean": 6.48,
-      "visits": 1718
+      "median": 4.02,
+      "mean": 9.21,
+      "visits": 2498
+    },
+    "ERF": {
+      "median": 3.66,
+      "mean": 7.26,
+      "visits": 7405
+    },
+    "ER": {
+      "median": 3.29,
+      "mean": 5.02,
+      "visits": 6121
+    },
+    "E": {
+      "median": 2.39,
+      "mean": 6.1,
+      "visits": 12798
     },
     "EF": {
-      "median": 1.44,
-      "mean": 2.53,
-      "visits": 2664
+      "median": 2.23,
+      "mean": 3.88,
+      "visits": 3279
     },
     "RF": {
-      "median": 1.23,
-      "mean": 2.19,
-      "visits": 1427
+      "median": 1.35,
+      "mean": 2.07,
+      "visits": 2232
     },
     "RZ": {
-      "median": 0.15,
-      "mean": 0.22,
-      "visits": 244
+      "median": 0.17,
+      "mean": 0.19,
+      "visits": 4
     },
     "RZF": {
-      "median": 0.01,
-      "mean": 0.01,
-      "visits": 10
+      "median": 0.03,
+      "mean": 1.76,
+      "visits": 6
     }
   },
-  "share_of_journeys_elongate_before_any_digit_loss": 0.496098104793757,
-  "share_of_journeys_digitless_before_elongate": 0.07079152731326645,
+  "share_of_journeys_elongate_before_any_digit_loss": 0.7149104539775094,
+  "share_of_journeys_digitless_before_elongate": 0.001665972511453561,
   "trait_changes_per_history": {
     "elongate": {
-      "gains": 60.85,
-      "losses": 21.18,
-      "gain_to_loss_ratio": 2.8729933899905573
+      "gains": 153.36,
+      "losses": 80.66,
+      "gain_to_loss_ratio": 1.9013141581948922
     },
     "digits reduced": {
-      "gains": 65.01,
-      "losses": 12.59,
-      "gain_to_loss_ratio": 5.163621922160445
+      "gains": 87.43,
+      "losses": 12.87,
+      "gain_to_loss_ratio": 6.793317793317794
     },
     "digitless": {
-      "gains": 37.98,
-      "losses": 3.15,
-      "gain_to_loss_ratio": 12.057142857142857
+      "gains": 59.27,
+      "losses": 18.05,
+      "gain_to_loss_ratio": 3.283656509695291
     },
     "fossorial": {
-      "gains": 50.91,
-      "losses": 6.55,
-      "gain_to_loss_ratio": 7.772519083969466
+      "gains": 218.15,
+      "losses": 64.88,
+      "gain_to_loss_ratio": 3.3623612823674476
     }
   },
   "mean_stay_all_branches_Myr": {
-    "0": 687.2,
-    "ERZF": 253.4,
-    "ERF": 46.6,
-    "R": 46.2,
-    "E": 39.5,
-    "ER": 38.7,
-    "ERZ": 31.4,
-    "F": 28.0,
-    "EF": 6.3,
-    "RF": 5.0,
+    "0": 509.3,
+    "ERZF": 116.5,
+    "ERZ": 71.9,
+    "R": 44.5,
+    "E": 36.3,
+    "ERF": 29.3,
+    "F": 29.2,
+    "ER": 21.2,
+    "EF": 7.5,
+    "RF": 5.2,
     "RZ": 0.2,
     "RZF": 0.0
   }

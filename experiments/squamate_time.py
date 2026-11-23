@@ -48,7 +48,7 @@ def snake(x):
 
 def prepare():
     parent, length, obs, *_ = sq.load()
-    p = json.loads((OUT / "squamate_fit_params.json").read_text())["P_pairwise"]
+    p = json.loads((OUT / f"squamate_fit_params{sq.SUFFIX}.json").read_text())["P_pairwise"]
     model = walks.TraitModel(p["gain"], np.full(sq.K, p["loss"]), gamma=1.0, D=np.array(p["Gamma"]), keep=sq.KEEP)
     Q = model.generator().toarray()
     n = len(parent)
@@ -191,7 +191,7 @@ def main():
                                                       "gain_to_loss_ratio": float(gains[i] / max(losses[i], 1))} for i in range(sq.K)},
         "mean_stay_all_branches_Myr": {k: round(v, 1) for k, v in sorted(stay.items(), key=lambda kv: -kv[1])},
     }
-    (OUT / "squamate_time.json").write_text(json.dumps(summary, indent=2))
+    (OUT / f"squamate_time{sq.SUFFIX}.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))
 
 

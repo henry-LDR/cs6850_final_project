@@ -1,0 +1,57 @@
+{
+  "tree_tips": 6885,
+  "species_with_any_trait": 6885,
+  "species_with_digits_and_presacrals": 2403,
+  "previous_dataset_alone_with_both": 911,
+  "presacrals_by_source": {
+    "": 4417,
+    "radiographs": 1312,
+    "convergence_dataset": 1156
+  },
+  "digits_by_source": {
+    "squambase_limb_status": 5095,
+    "convergence_dataset": 1115,
+    "": 525,
+    "camaiti2022": 148,
+    "bergmann_morinaga2019": 2
+  },
+  "agreement_checks": {
+    "presacrals: convergence dataset vs radiographs": {
+      "overlap": 1052,
+      "spearman": 0.992,
+      "median_abs_difference": 0.0,
+      "share_within_10_percent": 0.986
+    },
+    "presacrals: convergence dataset vs Camaiti 2022": {
+      "overlap": 159,
+      "spearman": 0.986,
+      "median_abs_difference": 1.0,
+      "share_within_10_percent": 0.943
+    },
+    "digits: convergence dataset vs Camaiti 2022": {
+      "overlap": 240,
+      "spearman": 0.984,
+      "median_abs_difference": 0.0,
+      "share_within_10_percent": 0.929
+    },
+    "digits: convergence dataset vs Bergmann & Morinaga": {
+      "overlap": 166,
+      "spearman": 0.984,
+      "median_abs_difference": 0.0,
+      "share_within_10_percent": 0.898
+    },
+    "digit inference: counted digits where SquamBase says '4 well developed limbs'": {
+      "species": 1063,
+      "share_with_10": 0.963,
+      "share_with_8_or_more": 1.0
+    },
+    "digit inference: counted digits where SquamBase says 'limbless'": {
+      "species": 146,
+      "share_with_0": 0.865
+    },
+    "fossorial: convergence dataset vs SquamBase substrate": {
+      "overlap": 1360,
+      "agreement": 0.917
+    }
+  }
+}

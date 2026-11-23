@@ -52,7 +52,7 @@ STEPS = 300
 
 
 def species_states(d):
-    return np.c_[d.Presacrals >= 35, d.Digits < 10, d.Digits == 0, d["Habitat (4)"] == "Fossorial"].astype(int)
+    return np.c_[d.Presacrals >= 35, d.Digits < 10, d.Digits == 0, d.fossorial.fillna(0) == 1].astype(int)
 
 
 def walk_matrix(G, X, rho):
@@ -83,7 +83,7 @@ def analyze_walk(P, snake, start):
 
 def trait_model_scenario(burrow_factor):
     """Fitted 12-state model with the burrowing gain rate scaled by burrow_factor."""
-    p = json.loads((OUT / "squamate_fit_params.json").read_text())["P_pairwise"]
+    p = json.loads((OUT / f"squamate_fit_params{sq.SUFFIX}.json").read_text())["P_pairwise"]
     gain = np.array(p["gain"], float)
     gain[3] *= burrow_factor
     model = walks.TraitModel(gain, np.full(sq.K, p["loss"]), gamma=1.0, D=np.array(p["Gamma"]), keep=sq.KEEP)
@@ -102,10 +102,10 @@ def main():
     d, age, form = sn.load()
     R, L = sn.knn_graph(age, sn.K_NN, rng), sn.knn_graph(form, sn.K_NN, rng)
     G = ((R + L) > 0).astype(float)
-    snake = np.load(OUT / "species_network_cut.npz")["snake"]
+    snake = np.load(OUT / f"species_network_cut{sn.SUFFIX}.npz")["snake"]
     X = species_states(d)
     ordinary = np.flatnonzero(X.sum(1) == 0)
-    changes = json.loads((OUT / "squamate_time.json").read_text())["trait_changes_per_history"]
+    changes = json.loads((OUT / f"squamate_time{sq.SUFFIX}.json").read_text())["trait_changes_per_history"]
     rho = np.array([changes[t]["gain_to_loss_ratio"] for t in sq.TRAITS])
 
     results = {"gain_to_loss_ratios": dict(zip(sq.TRAITS, np.round(rho, 2).tolist())),
@@ -123,7 +123,7 @@ def main():
                         for k, v in walks_out.items()}
     results["scenarios"] = {k: {"species_network_walk": {kk: vv for kk, vv in v["species_network_walk"].items() if kk != "share_snake_like_after_steps"},
                                 "trait_model": v["trait_model"]} for k, v in scenarios.items()}
-    (OUT / "species_walk.json").write_text(json.dumps(results, indent=2, ensure_ascii=False))
+    (OUT / f"species_walk{sn.SUFFIX}.json").write_text(json.dumps(results, indent=2, ensure_ascii=False))
     print(json.dumps(results, indent=2, ensure_ascii=False))
     plot(walks_out, scenarios, rho)
 
@@ -160,10 +160,10 @@ def plot(walks_out, scenarios, rho):
     b.set_ylabel("Share of walkers in the\nsnake-like community", fontsize=8, color="#0b0b0b")
     b.set_title("Walks on the species network", fontsize=9, loc="left", color="#0b0b0b")
     b.set_ylim(0, None)
-    b.legend(fontsize=7, frameon=False, loc="lower right")
+    b.legend(fontsize=7, frameon=False, loc="center right", bbox_to_anchor=(1, 0.36))
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"species_walk.{ext}", facecolor=fig.get_facecolor())
+        fig.savefig(OUT / f"species_walk{sn.SUFFIX}.{ext}", facecolor=fig.get_facecolor())
 
 
 if __name__ == "__main__":

@@ -1,76 +1,83 @@
 {
-  "species": 919,
+  "species": 1451,
+  "species_set": "lizards",
+  "tree": "title2024",
+  "species_in_kernel_graph": 1451,
   "small_world": {
     "relatives_only": {
-      "edges": 3569,
-      "components": 23,
-      "giant": 253,
-      "mean_path_length": 6.0059915929481145,
-      "clustering": 0.5770157159485223
+      "edges": 5621,
+      "components": 45,
+      "giant": 144,
+      "mean_path_length": 3.6858974358974357,
+      "clustering": 0.5543159001492335
     },
     "look_alikes_only": {
-      "edges": 4637,
-      "components": 16,
-      "giant": 172,
-      "mean_path_length": 6.88297293621651,
-      "clustering": 0.6507084969294271
+      "edges": 7666,
+      "components": 22,
+      "giant": 329,
+      "mean_path_length": 2.6064941804433244,
+      "clustering": 0.033235545397364216
     },
     "combined": {
-      "edges": 7808,
+      "edges": 12852,
       "components": 1,
-      "giant": 919,
-      "mean_path_length": 3.729167111168007,
-      "clustering": 0.27486346101635845
+      "giant": 1451,
+      "mean_path_length": 3.9038056988046295,
+      "clustering": 0.23526161737294438
     },
     "random_same_density": {
-      "edges": 7889,
+      "edges": 12916,
       "components": 1,
-      "giant": 919,
-      "mean_path_length": 2.704348526981824,
-      "clustering": 0.018665019868067522
+      "giant": 1451,
+      "mean_path_length": 2.8162019059388292,
+      "clustering": 0.012913388617045704
     },
     "convergence_links": {
-      "look_alike_links": 4637,
-      "between_relatives_over_100_Myr_apart": 2667,
-      "of_which_both_species_derived": 380,
-      "their_common_ancestor_age_Myr_median": 196.86544700000002,
-      "derived_species": 267
+      "look_alike_links": 7666,
+      "between_relatives_over_100_Myr_apart": 5509,
+      "of_which_both_species_derived": 720,
+      "their_common_ancestor_age_Myr_median": 196.5138999281,
+      "derived_species": 328
     }
   },
   "convergence_bottleneck": {
-    "conductance": 0.004007566395687034,
-    "next_best_cut_among_limbed_conductance": 0.38181819535320194,
+    "conductance": 0.003038132741928052,
+    "next_best_cut_among_limbed_conductance": 0.37611440348634284,
     "snake_like_side": {
-      "species": 182,
+      "species": 217,
       "digits_range": [
         0,
-        6
+        7
       ],
       "digits_median": 0.0,
       "presacrals_range": [
         37,
-        252
+        131
       ],
-      "presacrals_median": 58.0,
-      "fossorial_share": 0.764,
-      "clades": 11,
-      "clade_counts": {
-        "Lygosominae1": 42,
-        "Amphisbaenia": 30,
-        "Scincinae2": 28,
-        "Gekkota": 23,
-        "Acontiinae": 14,
-        "Gymnophthalmoidea": 12,
-        "Serpentes": 11,
-        "Anguimorpha": 8,
-        "Scincinae1": 7,
+      "presacrals_median": 55.0,
+      "fossorial_share": 0.728,
+      "families": 15,
+      "family_counts": {
+        "Scincidae": 136,
+        "Pygopodidae": 23,
+        "Amphisbaenidae": 22,
+        "Gymnophthalmidae": 12,
+        "Anguidae": 6,
         "Dibamidae": 5,
-        "Xantusiomorpha": 2
+        "Anniellidae": 2,
+        "Bipedidae": 2,
+        "Blanidae": 2,
+        "Trogonophidae": 2,
+        "Cadeidae": 1,
+        "Cordylidae": 1,
+        "Diploglossidae": 1,
+        "Rhineuridae": 1,
+        "Gerrhosauridae": 1
       },
-      "lineages_split_over_50_Myr": 38
+      "lineages_split_over_50_Myr": 30
     },
     "limbed_side": {
-      "species": 737,
+      "species": 1234,
       "digits_range": [
         8,
         10
@@ -81,25 +88,50 @@
         54
       ],
       "presacrals_median": 26.0,
-      "fossorial_share": 0.038,
-      "clades": 11,
-      "clade_counts": {
-        "Iguania": 305,
-        "Gekkota": 95,
-        "Lygosominae2": 76,
-        "Lygosominae1": 63,
-        "Scincinae2": 59,
-        "Gymnophthalmoidea": 50,
-        "Lacertidae": 32,
-        "Anguimorpha": 32,
-        "Xantusiomorpha": 17,
-        "Scincinae1": 7,
-        "Ancestral": 1
+      "fossorial_share": 0.039,
+      "families": 36,
+      "family_counts": {
+        "Scincidae": 377,
+        "Agamidae": 123,
+        "Lacertidae": 108,
+        "Gekkonidae": 83,
+        "Phrynosomatidae": 71,
+        "Anolidae": 68,
+        "Gymnophthalmidae": 46,
+        "Chamaeleonidae": 40,
+        "Varanidae": 36,
+        "Teiidae": 34,
+        "Diplodactylidae": 33,
+        "Sphaerodactylidae": 25,
+        "Tropiduridae": 25,
+        "Liolaemidae": 17,
+        "Cordylidae": 16,
+        "Gerrhosauridae": 14,
+        "Carphodactylidae": 11,
+        "Anguidae": 10,
+        "Iguanidae": 10,
+        "Eublepharidae": 9,
+        "Phyllodactylidae": 9,
+        "Leiocephalidae": 9,
+        "Xantusiidae": 8,
+        "Corytophanidae": 7,
+        "Crotaphytidae": 7,
+        "Opluridae": 6,
+        "Hoplocercidae": 6,
+        "Alopoglossidae": 5,
+        "Diploglossidae": 4,
+        "Polychrotidae": 4,
+        "Leiosauridae": 3,
+        "Dactyloidae": 1,
+        "Helodermatidae": 1,
+        "Lanthanotidae": 1,
+        "Shinisauridae": 1,
+        "Xenosauridae": 1
       },
-      "lineages_split_over_50_Myr": 156
+      "lineages_split_over_50_Myr": 90
     },
     "bridge_species": {
-      "species": 20,
+      "species": 26,
       "digits_range": [
         6,
         8
@@ -110,97 +142,105 @@
         48
       ],
       "presacrals_median": 39.5,
-      "fossorial_share": 0.7,
-      "clades": 5,
-      "clade_counts": {
-        "Lygosominae1": 12,
-        "Scincinae1": 3,
-        "Scincinae2": 2,
-        "Gymnophthalmoidea": 2,
-        "Anguimorpha": 1
+      "fossorial_share": 0.654,
+      "families": 2,
+      "family_counts": {
+        "Scincidae": 22,
+        "Gymnophthalmidae": 2
       },
-      "lineages_split_over_50_Myr": 5,
+      "lineages_split_over_50_Myr": 6,
       "names": [
-        "Lerista_tridactyla",
-        "Hemiergis_decresiensis",
-        "Lerista_muelleri",
-        "Lerista_terdigitata",
         "Saiphos_equalis",
+        "Lerista_muelleri",
+        "Lerista_tridactyla",
+        "Lerista_terdigitata",
+        "Hemiergis_decresiensis",
+        "Hemiergis_talbingoensis",
+        "Leptosiaphos_blochmanni",
         "Lerista_fragilis",
-        "Chalcides_sphenopsiformis",
-        "Brachymeles_tridactylus",
+        "Brachymeles_muntingkamay",
+        "Brachymeles_libayani",
+        "Brachymeles_paeforum",
         "Lerista_wilkinsi",
-        "Bachia_panoplia",
         "Chalcides_mionecton",
         "Bachia_scolecoides",
+        "Bachia_panoplia",
         "Brachymeles_elerae",
         "Brachymeles_bicolor",
+        "Lerista_aericeps",
+        "Celestus_sepsoides",
         "Celestus_haetianus",
         "Lerista_xanthura",
         "Lerista_orientalis",
-        "Lerista_frosti",
         "Hemiergis_peronii",
+        "Lerista_frosti",
+        "Lerista_chordae",
         "Lerista_dorsalis"
       ]
     },
     "second_cut_inside_snake_like_side": {
-      "conductance": 0.030419461171633525,
+      "conductance": 0.033247886151984915,
       "small_side": {
-        "species": 10,
+        "species": 2,
         "digits_range": [
-          0,
-          0
+          5,
+          5
         ],
-        "digits_median": 0.0,
+        "digits_median": 5.0,
         "presacrals_range": [
-          174,
-          252
+          103,
+          119
         ],
-        "presacrals_median": 196.5,
+        "presacrals_median": 111.0,
         "fossorial_share": 1.0,
-        "clades": 1,
-        "clade_counts": {
-          "Serpentes": 10
+        "families": 1,
+        "family_counts": {
+          "Bipedidae": 2
         },
-        "lineages_split_over_50_Myr": 7
+        "lineages_split_over_50_Myr": 2
       }
     }
   },
   "bandwidth_robustness": {
     "0.2": {
-      "conductance": 0.00034,
-      "small_side": 179,
-      "small_side_digits_max": 6,
-      "small_side_clades": 11,
-      "species_in_graph": 916
+      "conductance": 1e-05,
+      "small_side": 214,
+      "small_side_digits_max": 7,
+      "small_side_presacrals_median": 54.0,
+      "small_side_families": 14,
+      "species_in_graph": 1448
     },
     "0.25": {
-      "conductance": 0.00174,
-      "small_side": 182,
-      "small_side_digits_max": 6,
-      "small_side_clades": 11,
-      "species_in_graph": 919
+      "conductance": 0.00111,
+      "small_side": 215,
+      "small_side_digits_max": 7,
+      "small_side_presacrals_median": 54.0,
+      "small_side_families": 14,
+      "species_in_graph": 1449
     },
     "0.3": {
-      "conductance": 0.00401,
-      "small_side": 182,
-      "small_side_digits_max": 6,
-      "small_side_clades": 11,
-      "species_in_graph": 919
+      "conductance": 0.00304,
+      "small_side": 217,
+      "small_side_digits_max": 7,
+      "small_side_presacrals_median": 55.0,
+      "small_side_families": 15,
+      "species_in_graph": 1451
     },
     "0.4": {
-      "conductance": 0.01066,
-      "small_side": 182,
-      "small_side_digits_max": 6,
-      "small_side_clades": 11,
-      "species_in_graph": 919
+      "conductance": 0.00849,
+      "small_side": 217,
+      "small_side_digits_max": 7,
+      "small_side_presacrals_median": 55.0,
+      "small_side_families": 15,
+      "species_in_graph": 1451
     },
     "0.5": {
-      "conductance": 0.0219,
-      "small_side": 176,
-      "small_side_digits_max": 6,
-      "small_side_clades": 11,
-      "species_in_graph": 919
+      "conductance": 0.01829,
+      "small_side": 217,
+      "small_side_digits_max": 7,
+      "small_side_presacrals_median": 55.0,
+      "small_side_families": 15,
+      "species_in_graph": 1451
     }
   }
 }

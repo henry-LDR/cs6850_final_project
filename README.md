@@ -32,6 +32,11 @@ The biased evolutionary walk is a continuous-time chain turned into a lazy discr
 | `experiments/observed_states.py` | Part 1, data: are observed trait profiles a connected, geodesic region of the hypercube? |
 | `experiments/tb_cascades.py` | Part 2: TB drug resistance as a cascade on a dependency graph |
 | `experiments/tb_fit.py` | Part 3: fit the biased walk to TB resistance on its tree; hitting times, stationary distribution, bottleneck |
+| `data/build_squamates.py` | Merges five squamate trait sources onto the Title et al. (2024) tree and checks how they agree |
+| `experiments/species_network.py` | Squamate species network (relatives + look-alikes): small-world structure and the Cheeger convergence bottleneck |
+| `experiments/squamate_time.py` | Stochastic mapping on the dated tree: independent origins, time spent at each step, gain/loss counts |
+| `experiments/species_walk.py` | Unbiased vs evolution-biased random walks on the species network; environmental scenarios |
+| `experiments/species_network_drawing.py` | Slide figure: the species network itself |
 | `experiments/squamate_fit.py` | Squamates: elongation, digit loss and burrowing on a constrained 4-cube; pairwise dependency graph, routes to the snake-like form, bottleneck |
 | `experiments/squamate_graph.py` | Slide figure: the squamate body-plan graph with its Cheeger cut around the ancestor |
 | `experiments/validate_recovery.py` | Validation: recover planted rates and coupling from data simulated on the real TB tree |
@@ -84,7 +89,11 @@ Inferring how traits accumulate on the hypercube from phylogenetic data is an es
 | 1 | Observed TB profiles | 88 of 93 resistance profiles (95%) are linked by single-drug steps, against about 25% for random profiles with the same drug counts (0 of 500 null draws as high) | `results/observed_states.png` |
 | 1 | Observed bacterial phenotypes | 73 of 128 possible profiles over 7 traits occur, and paths between them are nearly geodesic: stretch 1.006, against about 1.07 for random profiles (0 of 500 as low) | `results/observed_states.png` |
 | 2 | TB dependency cascade | Dependency weights recover known biology unprompted: INH comes before RIF (0.72), AMI and CAP cross-resist, as do the two fluoroquinolones. An INH seed has the largest cascade (6.8 of 10 drugs, Independent Cascade) | `results/tb_cascades.png` |
-| 2, 3 | Squamates: snake-like body forms | Traits are strongly coupled. A directed dependency graph beats one shared coupling (p = 5×10⁻¹²). Elongation and complete digit loss each multiply the other's rate at least 400-fold. 99.8% of simulated lineages elongate before losing their last digits. The conductance bottleneck isolates the ancestral body plan: leaving it is the rare step, and once one trait changes the rest tend to follow. Provisional tree, 1,246 species | `results/squamate_fit.png` |
+| 1 | Squamate species network | 1,451 lizards (five merged datasets, Title et al. 2024 tree) linked to 6 relatives and 6 look-alikes form a small world: clustering 0.24 vs 0.013 random, mean path 3.9 vs 2.8, with 720 convergence links between species over 100 Myr apart | `results/species_network.json` |
+| 3 | Convergence bottleneck | The Cheeger cut (conductance 0.003; next best 0.38) separates 217 snake-like lizards from 15 families and 30 lineages from 1,234 limbed lizards. Only 26 bridge species from 6 lineages (*Lerista*, *Brachymeles*, *Bachia*…) span it. Same cut with snakes added and on the Zheng and Wiens tree | `results/species_network.png` |
+| 3 | Time bottleneck | Stochastic mapping: about 47 independent origins. Lineages stay ordinary lizards 509 Myr on average (the tree spans 206 Myr), but reach snake-like a median 37 Myr after starting. 71% elongate before losing any digits; 0.2% lose all digits first | `results/squamate_time.json` |
+| 2, 3 | Direction and scenarios | Every trait is gained 1.9–6.8× more often than lost. Walks tilted by those ratios reach the snake-like community in 60 steps vs 156. Favouring burrowing 4× (habitat loss) cuts the trait model's time to snake-like by 46%; disfavouring it raises it 43% | `results/species_walk.png` |
+| 2, 3 | Trait-dependency model (6,885 species) | Directed pairwise couplings beat independent traits (p ≈ 10⁻¹³⁰); elongation and complete digit loss each multiply the other's rate at least 400-fold; the ancestral lizard is the walk's bottleneck | `results/squamate_fit.png` |
 | 3 | TB fit on the tree (partial) | Sister isolates differ on 2.1 of 10 drugs despite tiny branch lengths. Allowing for test misclassification improves the fit enormously (log-likelihood +54, about 11% error per test), and the coupling is positive (γ ≈ 0.65, p < 10⁻⁴ conditional on the other estimates). But with resistance allowed to be lost, rates run to the optimizer's bounds, so we hold off on hitting times and bottlenecks for TB until we fit an irreversible model | `results/tb_fit_partial.json` |
 | Validation | Planted models on the TB tree | Fitted γ has median 0.05, 0.54 and 1.12 for planted 0, 0.5 and 1. The likelihood-ratio test rejects γ = 0 in 2/20, 16/20 and 20/20 runs | `results/validate_recovery.png` |
 
@@ -110,7 +119,9 @@ Inferring how traits accumulate on the hypercube from phylogenetic data is an es
 - [ ] Part 2: Independent Cascade on a bacterial species network for gene transfer
 - [ ] C4: the 37 lineages have no tree and many unknowns; use the Part 1 analysis with unknowns treated as wildcards
 - [x] Squamates: first fit on a provisional tree
-- [ ] Squamates: rerun on the Zheng and Wiens (2016) tree once `squamate_tree_zw2016.nexus` is downloaded (`experiments/squamate_fit.py` picks it up automatically)
+- [x] Squamates: merged five datasets (2,403 species with digits and vertebrae); Title et al. (2024) tree, Zheng and Wiens (2016) as a robustness check
+- [x] Species network: small world, Cheeger convergence bottleneck, time bottleneck, biased walks and scenarios
+- [ ] Squamates: other trees (Tonini et al. 100 trees) and bootstrap intervals for the cut and the times
 - [ ] Squamates: confidence intervals for Γ (couplings at the bound are lower bounds), and sensitivity to the 35-vertebra threshold
 - [ ] Validation: recover planted bottlenecks, not only rates
 

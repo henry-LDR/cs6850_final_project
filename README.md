@@ -33,6 +33,7 @@ The biased evolutionary walk is a continuous-time chain turned into a lazy discr
 | `experiments/tb_cascades.py` | Part 2: TB drug resistance as a cascade on a dependency graph |
 | `experiments/tb_fit.py` | Part 3: fit the biased walk to TB resistance on its tree; hitting times, stationary distribution, bottleneck |
 | `experiments/squamate_fit.py` | Squamates: elongation, digit loss and burrowing on a constrained 4-cube; pairwise dependency graph, routes to the snake-like form, bottleneck |
+| `experiments/squamate_graph.py` | Slide figure: the squamate body-plan graph with its Cheeger cut around the ancestor |
 | `experiments/validate_recovery.py` | Validation: recover planted rates and coupling from data simulated on the real TB tree |
 | `results/` | Figures and tables from the experiments |
 | `data/README.md` | Datasets and where to get them |

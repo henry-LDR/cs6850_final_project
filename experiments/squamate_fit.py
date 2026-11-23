@@ -227,7 +227,7 @@ def main(reuse):
         "one_gamma_p_value": float(chi2.sf(lr_c, 1)),
         "pairwise_p_value_vs_independent": float(chi2.sf(lr_p, int(FREE.sum()))),
         "pairwise_p_value_vs_one_gamma": float(chi2.sf(max(0.0, 2 * (p["loglik"] - c["loglik"])), int(FREE.sum()) - 1)),
-        "couplings_at_bound": [f"{TRAITS[j]} -> {TRAITS[i]}" for j in range(K) for i in range(K) if FREE[j, i] and abs(G[j, i]) > 5.99],
+        "couplings_at_bound": [f"{TRAITS[j]} -> {TRAITS[i]}" for j in range(K) for i in range(K) if FREE[j, i] and abs(G[j, i]) > 5.9],
         "gain_per_100_Myr": dict(zip(TRAITS, np.round(p["gain"], 4).tolist())),
         "loss_per_100_Myr": p["loss"],
         "Gamma_from_row_to_column": {TRAITS[j]: dict(zip(TRAITS, np.round(G[j], 2).tolist())) for j in range(K)},
@@ -259,7 +259,7 @@ def plot(G, order, gain):
     for j in range(K):
         for i in range(K):
             if FREE[j, i]:
-                txt = ("≥ +6" if G[j, i] > 5.99 else "≤ −6" if G[j, i] < -5.99 else f"{G[j, i]:+.1f}")
+                txt = ("≥ +6" if G[j, i] > 5.9 else "≤ −6" if G[j, i] < -5.9 else f"{G[j, i]:+.1f}")
                 a.text(i, j, txt, ha="center", va="center", fontsize=7,
                        color="#fcfcfb" if abs(G[j, i]) > 0.6 * lim else "#0b0b0b")
             elif i != j:

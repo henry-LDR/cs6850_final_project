@@ -1,0 +1,62 @@
+{
+  "tree_1": {
+    "truth": {
+      "origins": 102,
+      "journey_median_Myr": 103.9,
+      "journey_mean_Myr": 105.3,
+      "ancestor_mean_stay_Myr": 464.9,
+      "tips_snake_like": 779,
+      "tips_ordinary": 956
+    },
+    "recovered_from_tips": {
+      "origins": 96.0,
+      "journey_median_Myr": 114.1,
+      "ancestor_mean_stay_Myr": 494.0
+    }
+  },
+  "tree_2": {
+    "truth": {
+      "origins": 51,
+      "journey_median_Myr": 50.6,
+      "journey_mean_Myr": 53.3,
+      "ancestor_mean_stay_Myr": 525.5,
+      "tips_snake_like": 114,
+      "tips_ordinary": 1651
+    },
+    "recovered_from_tips": {
+      "origins": 51.5,
+      "journey_median_Myr": 48.4,
+      "ancestor_mean_stay_Myr": 543.1
+    }
+  },
+  "tree_3": {
+    "truth": {
+      "origins": 56,
+      "journey_median_Myr": 58.9,
+      "journey_mean_Myr": 71.2,
+      "ancestor_mean_stay_Myr": 481.6,
+      "tips_snake_like": 115,
+      "tips_ordinary": 1589
+    },
+    "recovered_from_tips": {
+      "origins": 56.5,
+      "journey_median_Myr": 59.9,
+      "ancestor_mean_stay_Myr": 486.6
+    }
+  },
+  "tree_4": {
+    "truth": {
+      "origins": 60,
+      "journey_median_Myr": 58.4,
+      "journey_mean_Myr": 61.4,
+      "ancestor_mean_stay_Myr": 483.5,
+      "tips_snake_like": 129,
+      "tips_ordinary": 1548
+    },
+    "recovered_from_tips": {
+      "origins": 63.0,
+      "journey_median_Myr": 57.2,
+      "ancestor_mean_stay_Myr": 467.3
+    }
+  }
+}

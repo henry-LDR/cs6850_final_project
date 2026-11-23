@@ -1,6 +1,6 @@
 """Biased random walks on the squamate species network: the direction of evolution.
 
-Network: the species network of experiments/species_network.py (919 species; links
+Network: the species network of experiments/species_network.py (1,451 lizard species; links
 to the 6 closest relatives and the 6 closest look-alikes).
 
 Two walks step from a species to one of its neighbours:

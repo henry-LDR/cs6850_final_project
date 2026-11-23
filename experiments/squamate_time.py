@@ -2,8 +2,8 @@
 
 Stochastic character mapping (Nielsen 2002; Huelsenbeck, Nielsen and Bollback 2003):
 using the 4-trait model fitted by experiments/squamate_fit.py, we sample complete
-histories of body-plan change on the dated Zheng and Wiens (2016) tree, each
-consistent with the traits of the 1,369 species at the tips.
+histories of body-plan change on the dated tree (Title et al. 2024 by default), each
+consistent with the traits of the species at the tips.
 
   1. Pruning gives, for every node, the likelihood of the data below it for each state.
   2. Going from the root (an ordinary lizard body, state 0) toward the tips, each node's

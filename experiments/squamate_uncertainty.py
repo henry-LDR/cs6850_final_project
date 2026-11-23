@@ -125,7 +125,7 @@ def main():
     theta = np.array(fitted["theta"], float)
     nll = lambda th: -fit.log_likelihood(model_from_theta(th), parent, length, tips)
     pos = sq.K + 1
-    at_bound = [i for i in range(len(theta)) if (i < pos and (theta[i] <= -7.99 or theta[i] >= 5.99)) or (i >= pos and abs(theta[i]) >= 5.99)]
+    at_bound = [i for i in range(len(theta)) if (i < pos and (theta[i] <= -7.9 or theta[i] >= 5.9)) or (i >= pos and abs(theta[i]) >= 5.9)]
     free_idx = [i for i in range(len(theta)) if i not in at_bound]
     H = hessian(nll, theta, free_idx)
     w, V = np.linalg.eigh(H)

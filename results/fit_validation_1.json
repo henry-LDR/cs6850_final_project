@@ -1,0 +1,67 @@
+{
+  "seed": 1,
+  "tips": 3000,
+  "tips_ordinary": 2212,
+  "tips_snake_like": 400,
+  "loglik_independent": -1593.350243968476,
+  "loglik_pairwise": -1248.0655872863124,
+  "converged": true,
+  "lr_p_value": 6.642361161503865e-142,
+  "loglik_at_truth": -1255.742225997547,
+  "gain_true": [
+    0.08328201478312029,
+    0.04742302315120107,
+    0.006288789269668674,
+    0.06919542791394974
+  ],
+  "gain_fit": [
+    0.0647,
+    0.0428,
+    0.0058,
+    0.0757
+  ],
+  "loss_true": 0.27654143848628054,
+  "loss_fit": 0.2959150509338416,
+  "Gamma": {
+    "elongate -> digits reduced": {
+      "true": 2.87,
+      "fit": 3.16
+    },
+    "elongate -> digitless": {
+      "true": 6.0,
+      "fit": 6.0
+    },
+    "elongate -> fossorial": {
+      "true": 2.88,
+      "fit": 2.26
+    },
+    "digits reduced -> elongate": {
+      "true": 2.61,
+      "fit": 2.27
+    },
+    "digits reduced -> fossorial": {
+      "true": 0.38,
+      "fit": 0.85
+    },
+    "digitless -> elongate": {
+      "true": 6.0,
+      "fit": 6.0
+    },
+    "digitless -> fossorial": {
+      "true": -0.56,
+      "fit": 0.13
+    },
+    "fossorial -> elongate": {
+      "true": 2.75,
+      "fit": 3.55
+    },
+    "fossorial -> digits reduced": {
+      "true": 2.75,
+      "fit": 2.73
+    },
+    "fossorial -> digitless": {
+      "true": -0.09,
+      "fit": 0.04
+    }
+  }
+}

@@ -167,7 +167,7 @@ def main(driver):
     lr = 2 * (res0.fun - res_fun)
     from scipy.stats import chi2
 
-    at_bound = [i for i in range(15) if (i < 7 and (res_x[i] <= -7.99 or res_x[i] >= 5.99)) or (i >= 7 and abs(res_x[i]) >= 5.99)]
+    at_bound = [i for i in range(15) if (i < 7 and (res_x[i] <= -7.9 or res_x[i] >= 5.9)) or (i >= 7 and abs(res_x[i]) >= 5.9)]
     free = [i for i in range(15) if i not in at_bound]
     H = unc.hessian(nll, res_x, free)
     w, V = np.linalg.eigh(H)

@@ -9,7 +9,7 @@ Snake-like bodies (long trunks, reduced or absent limbs) evolved dozens of times
 - **Random walks on the dated tree**: how long lineages spend at each step (time bottlenecks), and a walk biased by evolution's observed direction.
 - **Drivers and what-ifs**: environmental effects backed out from the tree set the walk's parameters under habitat change.
 
-We do not propose a new evolutionary model; a standard trait model (dependent binary traits on a tree, as in Pagel 1994 and HyperTraPS) is used only to date and orient changes for the network analysis. The 3-page progress writeup is [`docs/writeup.pdf`](docs/writeup.pdf); a plain-language guide for readers new to evolution and graph algorithms is [`docs/explainer.pdf`](docs/explainer.pdf).
+We do not propose a new evolutionary model; a standard trait model (dependent binary traits on a tree, as in Pagel 1994 and HyperTraPS) is used only to date and orient changes for the network analysis. The two slides for the in-class lightning presentation are [`docs/slides.pdf`](docs/slides.pdf). The 3-page progress writeup is [`docs/writeup.pdf`](docs/writeup.pdf); a plain-language guide for readers new to evolution and graph algorithms is [`docs/explainer.pdf`](docs/explainer.pdf).
 
 ## Results so far (95% intervals)
 
@@ -37,6 +37,8 @@ Download the squamate data by hand into `data/raw/` (see [`data/README.md`](data
 python data/build_squamates.py               # merge five sources onto the Title et al. (2024) tree
 python experiments/squamate_fit.py           # trait model on 6,885 species (about 15 min)
 python experiments/squamate_time.py          # stochastic maps: origins, time at each step
+python experiments/mapping_validation.py     # known-truth check of the mapping on simulated trees (no raw data needed)
+python experiments/fit_validation.py 1       # known-truth check of the coupling fitter on a simulated tree (no raw data needed)
 python experiments/species_network.py        # species network: small world, Cheeger cut
 python experiments/species_walk.py           # unbiased vs biased walks
 python experiments/species_network_bootstrap.py   # error bars for the network

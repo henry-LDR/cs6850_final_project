@@ -5,22 +5,28 @@ their published tree. The state graph is the 10-trait hypercube (1,024
 resistance profiles), and the root is fully susceptible.
 
 Steps:
-  1. Fit per-drug gain rates and a shared loss rate with independent traits
-     (gamma = 0), then with all-to-all coupling gamma, and compare them with a
-     likelihood-ratio test. gamma > 0 means each resistance already held speeds
-     up the next.
+  1. Fit three nested models and compare them with likelihood-ratio tests:
+       A. independent drugs (gamma = 0), test results taken as exact;
+       B. independent drugs, each test result wrong with probability error;
+       C. as B, plus all-to-all coupling gamma (the log-fold change in a gain
+          rate once all 9 other resistances are held).
+     Closely related isolates often differ on 2 of the 10 drugs, which
+     model A can only explain with very fast gains and losses; phenotypic
+     drug-susceptibility tests are known to misclassify some drugs, which
+     B allows. gamma > 0 means each resistance already held speeds up the next.
   2. Analyze the fitted chain with the course tools: first steps from the
      susceptible state, expected time to multidrug resistance (MDR, INH + RIF)
      and extensive resistance (XDR), the stationary distribution, and the
      conductance bottleneck from the Fiedler sweep cut.
 
 Run from the repository root after python data/fetch.py:
-  python experiments/tb_fit.py            (fits, then analyzes)
+  python experiments/tb_fit.py            (fits, then analyzes; about 15 minutes on 2 cores)
   python experiments/tb_fit.py --reuse    (analyzes saved fits)
 """
 
 import json
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import matplotlib
@@ -35,7 +41,9 @@ from evograph import fit, spectral, trees, walks
 
 DRUGS = ["INH", "RIF", "PZA", "EMB", "STR", "AMI", "CAP", "MOX", "OFL", "PRO"]
 K = len(DRUGS)
-D = np.ones((K, K)) - np.eye(K)
+# All-to-all coupling, scaled so gamma is the log-fold change in a drug's gain rate once all
+# 9 other resistances are held (each held resistance contributes gamma / 9).
+D = (np.ones((K, K)) - np.eye(K)) / (K - 1)
 OUT = Path("results")
 
 
@@ -44,8 +52,18 @@ def load():
     length = trees.rescale(length, parent)  # root-to-deepest-tip = 1 time unit
     node = {names[v]: v for v in trees.tips(parent)}
     d = pd.read_csv("data/raw/tb_resistance.csv", dtype={"Isolate": str})
-    data = {node[r.Isolate]: fit.tip_vector(r[DRUGS].astype(int).tolist(), K) for _, r in d.iterrows()}
-    return parent, length, data, d
+    obs = {node[r.Isolate]: r[DRUGS].astype(int).tolist() for _, r in d.iterrows()}
+    return parent, length, obs, d
+
+
+def run_fit(spec):
+    """One fit, in a worker process. spec = (fit_gamma, fit_error, x0)."""
+    fit_gamma, fit_error, x0 = spec
+    parent, length, obs, _ = load()
+    r = fit.fit_trait_model(K, parent, length, D=D, observations=obs, fit_gamma=fit_gamma,
+                            fit_error=fit_error, x0=x0)
+    return {key: (np.asarray(r[key]).tolist() if key in ("gain", "theta") else r[key])
+            for key in ("gain", "loss", "gamma", "error", "theta", "loglik", "n_params", "converged")}
 
 
 def bits(x):
@@ -58,26 +76,32 @@ def mask(*names):
 
 def main(reuse):
     OUT.mkdir(exist_ok=True)
-    parent, length, data, d = load()
+    _, _, _, d = load()
     params_path = OUT / "tb_fit_params.json"
 
     if reuse and params_path.exists():
         saved = json.loads(params_path.read_text())
     else:
-        independent = fit.fit_trait_model(K, parent, length, data, D=D, fit_gamma=False)
-        print("independent fit:", independent["loglik"])
-        x0 = np.r_[np.log(independent["gain"]), np.log(independent["loss"]), 0.0]
-        coupled = fit.fit_trait_model(K, parent, length, data, D=D, fit_gamma=True, x0=x0)
-        print("coupled fit:", coupled["loglik"])
-        saved = {
-            name: {key: (np.asarray(r[key]).tolist() if key == "gain" else r[key])
-                   for key in ("gain", "loss", "gamma", "loglik", "n_params", "converged")}
-            for name, r in (("independent", independent), ("coupled", coupled))
-        }
+        cache = OUT / "tb_fit_cache.json"  # finished fits, so an interrupted run resumes
+        done = json.loads(cache.read_text()) if cache.exists() else {}
+        with ProcessPoolExecutor(2) as pool:
+            if "B" not in done:
+                done["A"], done["B"] = pool.map(run_fit, [(False, False, None), (False, True, None)])
+                cache.write_text(json.dumps(done))
+            a, b = done["A"], done["B"]
+            print("A independent, exact tests:", a["loglik"])
+            print("B independent, test error:", b["loglik"], "error", b["error"])
+            tb = np.asarray(b["theta"])
+            starts = [np.r_[tb[: K + 1], g, tb[K + 1]] for g in (0.0, 1.0)]
+            c = max(pool.map(run_fit, [(True, True, s) for s in starts]), key=lambda r: r["loglik"])
+            print("C coupled, test error:", c["loglik"], "gamma", c["gamma"])
+        saved = {"A_independent_exact": a, "B_independent_error": b, "C_coupled_error": c}
         params_path.write_text(json.dumps(saved, indent=2))
 
-    ind, cpl = saved["independent"], saved["coupled"]
-    lr = 2 * (cpl["loglik"] - ind["loglik"])
+    a, b, cpl = saved["A_independent_exact"], saved["B_independent_error"], saved["C_coupled_error"]
+    lr_error = max(0.0, 2 * (b["loglik"] - a["loglik"]))
+    p_error = float(0.5 * chi2.sf(lr_error, df=1))  # error = 0 is on the boundary: 50:50 mixture
+    lr = max(0.0, 2 * (cpl["loglik"] - b["loglik"]))
     p_value = float(chi2.sf(lr, df=1))
     model = walks.TraitModel(cpl["gain"], np.full(K, cpl["loss"]), gamma=cpl["gamma"], D=D)
 
@@ -114,13 +138,18 @@ def main(reuse):
     summary = {
         "isolates": int(len(d)),
         "distinct_observed_profiles": int(len(np.unique(observed))),
-        "loglik_independent": ind["loglik"],
-        "loglik_coupled": cpl["loglik"],
+        "loglik": {"A_independent_exact": a["loglik"], "B_independent_error": b["loglik"],
+                   "C_coupled_error": cpl["loglik"]},
+        "A_rates": {"gain": dict(zip(DRUGS, np.round(a["gain"], 3).tolist())), "loss": a["loss"]},
+        "test_error_rate": cpl["error"],
+        "error_likelihood_ratio": lr_error,
+        "error_p_value": p_error,
         "gamma": cpl["gamma"],
-        "likelihood_ratio": lr,
-        "p_value": p_value,
+        "gamma_likelihood_ratio": lr,
+        "gamma_p_value": p_value,
         "gain_rates": dict(zip(DRUGS, np.round(cpl["gain"], 4).tolist())),
         "loss_rate": cpl["loss"],
+        "all_fits_converged": bool(a["converged"] and b["converged"] and cpl["converged"]),
         "first_step_probability": dict(zip(DRUGS, np.round(first, 3).tolist())),
         "most_probable_route_to_MDR": [bits(x) for x in route],
         "time_to_MDR_tree_depths": float(t_mdr),
@@ -142,7 +171,8 @@ def main(reuse):
     ax.bar([DRUGS[i] for i in order], np.asarray(cpl["gain"])[order], color="#2a78d6", width=0.6)
     ax.set_yscale("log")
     ax.set_ylabel("Gain rate per tree depth (log scale)", color="#0b0b0b")
-    ax.set_title(f"TB resistance: fitted gain rates (coupling γ = {cpl['gamma']:.2f}, p = {p_value:.1g})",
+    ax.set_title(f"TB resistance: fitted gain rates (γ = {cpl['gamma']:.2f}, p = {p_value:.1g}; "
+                 f"test error {100 * cpl['error']:.1f}%)",
                  color="#0b0b0b", loc="left", fontsize=10)
     ax.grid(axis="y", color="#e8e7e3", lw=0.6)
     ax.set_axisbelow(True)

@@ -15,3 +15,4 @@ readings/
 docs/*.aux
 docs/*.log
 docs/*.out
+results/*.log

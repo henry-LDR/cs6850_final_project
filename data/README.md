@@ -10,6 +10,9 @@ Raw downloads go in `data/raw/` and cleaned tables in `data/processed/`; both ar
 | --- | --- | --- | --- |
 | *M. tuberculosis* (first real fit) | `tb_tree.nwk`, `tb_resistance.csv` | Phylogeny of 1,000+ isolates; resistance to 10 drugs (INH, RIF, PZA, EMB, STR, AMI, CAP, MOX, OFL, PRO) for 395 of them, 93 distinct profiles | Casali et al. (2014), *Nature Genetics* 46, 279–286, as curated in the [HyperTraPS-CT repository](https://github.com/StochasticBiology/hypertraps-ct) — **fetched** |
 | C4 plants | `c4_traits.csv`, `c4_trait_names.txt` | 16 C4 traits for 37 lineages, coded 0, 1, or 2 for unknown; no tree | Williams et al. (2013), *eLife* 2, e00961, as curated in the HyperTraPS-CT repository — **fetched** |
+| Squamates | `squamate_traits.xlsx` | Digits, phalanges, presacral vertebrae and habitat for 1,386 species, coded on the Zheng and Wiens (2016) tree | Snake-like convergence dataset, [Dryad doi:10.5061/dryad.crjdfn3g7](https://doi.org/10.5061/dryad.crjdfn3g7) (2025) — **download by hand**, save `Snake-like_Convergence_Dataset.xlsx` under this name |
+| Squamates | `squamate_tree_zw2016.nexus` | Zheng and Wiens (2016) time tree, 4,162 species | `Dataset_S2_zw2016.nexus` in [Dryad doi:10.5061/dryad.0zpc8671s](https://doi.org/10.5061/dryad.0zpc8671s) — **download by hand**. (Dryad doi:10.5061/dryad.tv055 holds only the alignment.) |
+| Squamates (until the above is in place) | `squamate_tree_provisional.tre` | A 4,162-tip squamate time tree; its crown age (174 Ma) differs from Zheng and Wiens (205 Ma), so it is a different published tree, probably Pyron and Burbrink (2014). 1,246 of the 1,386 species match | `datasets/squa.tre` in [github.com/uyedaj/bmr](https://github.com/uyedaj/bmr) — **fetched** |
 | Bacteria | `bacteria_traits_gtdb.csv` | 11,265 species with phenotypes and GTDB taxonomy | [Madin et al. (2020), *Scientific Data* 7, 170](https://github.com/bacteria-archaea-traits/bacteria-archaea-traits) — **fetched** |
 
 ## Planned

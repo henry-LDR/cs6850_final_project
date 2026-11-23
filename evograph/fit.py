@@ -24,6 +24,11 @@ import scipy.sparse as sp
 from .walks import TraitModel
 
 DENSE_LIMIT = 64
+MAX_STEPS = 1e6  # uniformization budget per branch; beyond it the likelihood is reported as -inf
+
+
+class _TooStiff(Exception):
+    pass
 
 
 def _propagator(Q, lengths, dense_limit):
@@ -49,6 +54,8 @@ def _uniformization(Q, chunk=30.0):
 
     def f(v, t, L):
         mu_total = lam * t
+        if mu_total > MAX_STEPS:
+            raise _TooStiff
         pieces = max(1, int(np.ceil(mu_total / chunk)))  # exp(Qt) = exp(Qt/c)^c keeps Poisson means small
         mu = mu_total / pieces
         for _ in range(pieces):
@@ -108,7 +115,10 @@ def log_likelihood(model, parent, length, tip_vectors, root_state=0, dense_limit
         logscale += np.log(s)
         if parent[v] < 0:
             return float(np.log(L[root_state]) + logscale) if L[root_state] > 0 else -np.inf
-        msg = propagate(v, length[v], L) if length[v] > 0 else L
+        try:
+            msg = propagate(v, length[v], L) if length[v] > 0 else L
+        except _TooStiff:  # rates so fast that a branch needs over MAX_STEPS steps: hopeless parameters
+            return -np.inf
         acc[parent[v]] *= np.maximum(msg, 0.0)
     raise ValueError("tree has no root")
 

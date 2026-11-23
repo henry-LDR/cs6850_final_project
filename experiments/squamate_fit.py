@@ -75,6 +75,10 @@ def load_tree():
     zw = RAW / "squamate_tree_zw2016.nexus"
     if zw.exists():
         parent, length, names = trees.read_nexus(zw.read_text())
+        # Keep Lepidosauria (tuatara + squamates); the file also has turtles, birds and crocodilians
+        tip = {names[v]: v for v in trees.tips(parent)}
+        root = trees.mrca(parent, [tip["Sphenodon_punctatus"], tip["Dibamus_bourreti"], tip["Python_regius"] if "Python_regius" in tip else tip["Iguana_iguana"]])
+        parent, length, names = trees.subtree(parent, length, names, root)
         source = "Zheng and Wiens (2016)"
     else:
         parent, length, names = trees.read_newick((RAW / "squamate_tree_provisional.tre").read_text())
@@ -99,8 +103,22 @@ def load():
     d = pd.read_excel(RAW / "squamate_traits.xlsx", sheet_name="Dataset")
     X = code(d)
     node = {names[v]: v for v in trees.tips(parent)}
-    obs = {node[s]: X[i].tolist() for i, s in enumerate(d.Species) if s in node}
+    d["tip"] = [tip_name(s, c, node) for s, c in zip(d.Species, d["Changes to Zheng & Wiens (2016)"])]
+    obs = {}
+    for i, s in enumerate(d.tip):
+        if isinstance(s, str) and node[s] not in obs:  # a stand-in tip used for two species keeps the first
+            obs[node[s]] = X[i].tolist()
     return parent, length, obs, d, X, source
+
+
+def tip_name(species, change, node):
+    """Tree tip for a species: itself, or the stand-in the dataset says it used ('Used Genus species')."""
+    if species in node:
+        return species
+    if isinstance(change, str) and change.startswith("Used "):
+        alt = change[5:].strip().replace(" ", "_")
+        return alt if alt in node else None
+    return None
 
 
 def run_fit(spec):

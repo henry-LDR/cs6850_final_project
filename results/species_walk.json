@@ -1,0 +1,72 @@
+{
+  "gain_to_loss_ratios": {
+    "elongate": 2.87,
+    "digits reduced": 5.16,
+    "digitless": 12.06,
+    "fossorial": 7.77
+  },
+  "ordinary_lizard_starts": 640,
+  "snake_like_community": 182,
+  "walks": {
+    "unbiased": {
+      "long_run_share_snake_like": 0.15938780737705116,
+      "mean_steps_ordinary_to_snake_like": 118.12304745988676,
+      "share_after_100_steps": 0.14620328194325669
+    },
+    "biased_by_evolution": {
+      "long_run_share_snake_like": 0.9747608901619292,
+      "mean_steps_ordinary_to_snake_like": 41.03861837824006,
+      "share_after_100_steps": 0.8577838676086214
+    }
+  },
+  "scenarios": {
+    "burrowing_disfavoured_4x (soil pollution)": {
+      "species_network_walk": {
+        "long_run_share_snake_like": 0.9452963917757251,
+        "mean_steps_ordinary_to_snake_like": 46.6570548941365
+      },
+      "trait_model": {
+        "mean_time_ancestor_to_snake_like_Myr": 1169.165440123558,
+        "long_run_share_snake_like": 0.8407512175280684,
+        "routes": {
+          "digits reduced → elongate → digitless": 0.493,
+          "elongate → digits reduced → digitless": 0.435,
+          "digits reduced → digitless → elongate": 0.072
+        },
+        "burrowing_before_elongation": 0.09
+      }
+    },
+    "observed": {
+      "species_network_walk": {
+        "long_run_share_snake_like": 0.9747608901619292,
+        "mean_steps_ordinary_to_snake_like": 41.03861837824006
+      },
+      "trait_model": {
+        "mean_time_ancestor_to_snake_like_Myr": 874.0215336669747,
+        "long_run_share_snake_like": 0.8669678695780951,
+        "routes": {
+          "digits reduced → elongate → digitless": 0.523,
+          "elongate → digits reduced → digitless": 0.418,
+          "digits reduced → digitless → elongate": 0.059
+        },
+        "burrowing_before_elongation": 0.288
+      }
+    },
+    "burrowing_favoured_4x (surface habitat loss)": {
+      "species_network_walk": {
+        "long_run_share_snake_like": 0.9848954415975474,
+        "mean_steps_ordinary_to_snake_like": 37.71776320944158
+      },
+      "trait_model": {
+        "mean_time_ancestor_to_snake_like_Myr": 505.1921284668636,
+        "long_run_share_snake_like": 0.8746985161150506,
+        "routes": {
+          "digits reduced → elongate → digitless": 0.569,
+          "elongate → digits reduced → digitless": 0.396,
+          "digits reduced → digitless → elongate": 0.035
+        },
+        "burrowing_before_elongation": 0.631
+      }
+    }
+  }
+}

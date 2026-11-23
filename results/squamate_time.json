@@ -1,0 +1,110 @@
+{
+  "maps": 100,
+  "branch_paths_that_fell_back": 0,
+  "independent_snake_like_origins_per_history": {
+    "median": 36.0,
+    "range": [
+      30,
+      44
+    ]
+  },
+  "journey_from_ordinary_lizard_to_snake_like_Myr": {
+    "median": 37.65921259068872,
+    "quartiles": [
+      20.9,
+      56.0
+    ]
+  },
+  "departure_Myr_before_present": {
+    "median": 57.83975406435715,
+    "quartiles": [
+      31.0,
+      86.6
+    ]
+  },
+  "time_in_each_state_on_journeys_Myr": {
+    "R": {
+      "median": 9.12,
+      "mean": 11.81,
+      "visits": 2572
+    },
+    "ER": {
+      "median": 4.78,
+      "mean": 7.7,
+      "visits": 4055
+    },
+    "ERF": {
+      "median": 4.43,
+      "mean": 8.25,
+      "visits": 4779
+    },
+    "E": {
+      "median": 3.02,
+      "mean": 5.84,
+      "visits": 5651
+    },
+    "F": {
+      "median": 2.58,
+      "mean": 6.48,
+      "visits": 1718
+    },
+    "EF": {
+      "median": 1.44,
+      "mean": 2.53,
+      "visits": 2664
+    },
+    "RF": {
+      "median": 1.23,
+      "mean": 2.19,
+      "visits": 1427
+    },
+    "RZ": {
+      "median": 0.15,
+      "mean": 0.22,
+      "visits": 244
+    },
+    "RZF": {
+      "median": 0.01,
+      "mean": 0.01,
+      "visits": 10
+    }
+  },
+  "share_of_journeys_elongate_before_any_digit_loss": 0.496098104793757,
+  "share_of_journeys_digitless_before_elongate": 0.07079152731326645,
+  "trait_changes_per_history": {
+    "elongate": {
+      "gains": 60.85,
+      "losses": 21.18,
+      "gain_to_loss_ratio": 2.8729933899905573
+    },
+    "digits reduced": {
+      "gains": 65.01,
+      "losses": 12.59,
+      "gain_to_loss_ratio": 5.163621922160445
+    },
+    "digitless": {
+      "gains": 37.98,
+      "losses": 3.15,
+      "gain_to_loss_ratio": 12.057142857142857
+    },
+    "fossorial": {
+      "gains": 50.91,
+      "losses": 6.55,
+      "gain_to_loss_ratio": 7.772519083969466
+    }
+  },
+  "mean_stay_all_branches_Myr": {
+    "0": 687.2,
+    "ERZF": 253.4,
+    "ERF": 46.6,
+    "R": 46.2,
+    "E": 39.5,
+    "ER": 38.7,
+    "ERZ": 31.4,
+    "F": 28.0,
+    "EF": 6.3,
+    "RF": 5.0,
+    "RZ": 0.2,
+    "RZF": 0.0
+  }
+}

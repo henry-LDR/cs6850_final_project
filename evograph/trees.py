@@ -97,6 +97,34 @@ def read_nexus(text):
     return parent, length, [names.get(x, x) for x in labels]
 
 
+def subtree(parent, length, names, root):
+    """The clade below node root, reindexed so parents still come before children."""
+    parent = np.asarray(parent)
+    keep = np.zeros(len(parent), bool)
+    keep[root] = True
+    for v in range(root + 1, len(parent)):
+        if parent[v] >= 0 and keep[parent[v]]:
+            keep[v] = True
+    old = np.flatnonzero(keep)
+    new = {o: i for i, o in enumerate(old)}
+    par = np.array([-1 if o == root else new[parent[o]] for o in old])
+    return par, np.where(par < 0, 0.0, np.asarray(length)[old]), [names[o] for o in old]
+
+
+def mrca(parent, nodes):
+    """Most recent common ancestor of the given nodes."""
+    def path(v):
+        out = []
+        while v >= 0:
+            out.append(v)
+            v = parent[v]
+        return out
+    common = set(path(nodes[0]))
+    for v in nodes[1:]:
+        common &= set(path(v))
+    return max(common)  # deepest shared node has the largest index
+
+
 def rescale(length, parent, height=1.0):
     """Scale branch lengths so the deepest tip sits at the given height above the root."""
     depth = np.zeros(len(parent))

@@ -1,0 +1,206 @@
+{
+  "species": 919,
+  "small_world": {
+    "relatives_only": {
+      "edges": 3569,
+      "components": 23,
+      "giant": 253,
+      "mean_path_length": 6.0059915929481145,
+      "clustering": 0.5770157159485223
+    },
+    "look_alikes_only": {
+      "edges": 4637,
+      "components": 16,
+      "giant": 172,
+      "mean_path_length": 6.88297293621651,
+      "clustering": 0.6507084969294271
+    },
+    "combined": {
+      "edges": 7808,
+      "components": 1,
+      "giant": 919,
+      "mean_path_length": 3.729167111168007,
+      "clustering": 0.27486346101635845
+    },
+    "random_same_density": {
+      "edges": 7889,
+      "components": 1,
+      "giant": 919,
+      "mean_path_length": 2.704348526981824,
+      "clustering": 0.018665019868067522
+    },
+    "convergence_links": {
+      "look_alike_links": 4637,
+      "between_relatives_over_100_Myr_apart": 2667,
+      "of_which_both_species_derived": 380,
+      "their_common_ancestor_age_Myr_median": 196.86544700000002,
+      "derived_species": 267
+    }
+  },
+  "convergence_bottleneck": {
+    "conductance": 0.004007566395687034,
+    "next_best_cut_among_limbed_conductance": 0.38181819535320194,
+    "snake_like_side": {
+      "species": 182,
+      "digits_range": [
+        0,
+        6
+      ],
+      "digits_median": 0.0,
+      "presacrals_range": [
+        37,
+        252
+      ],
+      "presacrals_median": 58.0,
+      "fossorial_share": 0.764,
+      "clades": 11,
+      "clade_counts": {
+        "Lygosominae1": 42,
+        "Amphisbaenia": 30,
+        "Scincinae2": 28,
+        "Gekkota": 23,
+        "Acontiinae": 14,
+        "Gymnophthalmoidea": 12,
+        "Serpentes": 11,
+        "Anguimorpha": 8,
+        "Scincinae1": 7,
+        "Dibamidae": 5,
+        "Xantusiomorpha": 2
+      },
+      "lineages_split_over_50_Myr": 38
+    },
+    "limbed_side": {
+      "species": 737,
+      "digits_range": [
+        8,
+        10
+      ],
+      "digits_median": 10.0,
+      "presacrals_range": [
+        14,
+        54
+      ],
+      "presacrals_median": 26.0,
+      "fossorial_share": 0.038,
+      "clades": 11,
+      "clade_counts": {
+        "Iguania": 305,
+        "Gekkota": 95,
+        "Lygosominae2": 76,
+        "Lygosominae1": 63,
+        "Scincinae2": 59,
+        "Gymnophthalmoidea": 50,
+        "Lacertidae": 32,
+        "Anguimorpha": 32,
+        "Xantusiomorpha": 17,
+        "Scincinae1": 7,
+        "Ancestral": 1
+      },
+      "lineages_split_over_50_Myr": 156
+    },
+    "bridge_species": {
+      "species": 20,
+      "digits_range": [
+        6,
+        8
+      ],
+      "digits_median": 8.0,
+      "presacrals_range": [
+        37,
+        48
+      ],
+      "presacrals_median": 39.5,
+      "fossorial_share": 0.7,
+      "clades": 5,
+      "clade_counts": {
+        "Lygosominae1": 12,
+        "Scincinae1": 3,
+        "Scincinae2": 2,
+        "Gymnophthalmoidea": 2,
+        "Anguimorpha": 1
+      },
+      "lineages_split_over_50_Myr": 5,
+      "names": [
+        "Lerista_tridactyla",
+        "Hemiergis_decresiensis",
+        "Lerista_muelleri",
+        "Lerista_terdigitata",
+        "Saiphos_equalis",
+        "Lerista_fragilis",
+        "Chalcides_sphenopsiformis",
+        "Brachymeles_tridactylus",
+        "Lerista_wilkinsi",
+        "Bachia_panoplia",
+        "Chalcides_mionecton",
+        "Bachia_scolecoides",
+        "Brachymeles_elerae",
+        "Brachymeles_bicolor",
+        "Celestus_haetianus",
+        "Lerista_xanthura",
+        "Lerista_orientalis",
+        "Lerista_frosti",
+        "Hemiergis_peronii",
+        "Lerista_dorsalis"
+      ]
+    },
+    "second_cut_inside_snake_like_side": {
+      "conductance": 0.030419461171633525,
+      "small_side": {
+        "species": 10,
+        "digits_range": [
+          0,
+          0
+        ],
+        "digits_median": 0.0,
+        "presacrals_range": [
+          174,
+          252
+        ],
+        "presacrals_median": 196.5,
+        "fossorial_share": 1.0,
+        "clades": 1,
+        "clade_counts": {
+          "Serpentes": 10
+        },
+        "lineages_split_over_50_Myr": 7
+      }
+    }
+  },
+  "bandwidth_robustness": {
+    "0.2": {
+      "conductance": 0.00034,
+      "small_side": 179,
+      "small_side_digits_max": 6,
+      "small_side_clades": 11,
+      "species_in_graph": 916
+    },
+    "0.25": {
+      "conductance": 0.00174,
+      "small_side": 182,
+      "small_side_digits_max": 6,
+      "small_side_clades": 11,
+      "species_in_graph": 919
+    },
+    "0.3": {
+      "conductance": 0.00401,
+      "small_side": 182,
+      "small_side_digits_max": 6,
+      "small_side_clades": 11,
+      "species_in_graph": 919
+    },
+    "0.4": {
+      "conductance": 0.01066,
+      "small_side": 182,
+      "small_side_digits_max": 6,
+      "small_side_clades": 11,
+      "species_in_graph": 919
+    },
+    "0.5": {
+      "conductance": 0.0219,
+      "small_side": 176,
+      "small_side_digits_max": 6,
+      "small_side_clades": 11,
+      "species_in_graph": 919
+    }
+  }
+}

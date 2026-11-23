@@ -1,7 +1,7 @@
 {
-  "tree": "provisional (github.com/uyedaj/bmr datasets/squa.tre)",
+  "tree": "Zheng and Wiens (2016)",
   "species_in_dataset": 1386,
-  "species_on_tree": 1246,
+  "species_on_tree": 1369,
   "species_fully_coded": 925,
   "trait_frequencies": {
     "elongate": 0.218,
@@ -10,79 +10,78 @@
     "fossorial": 0.177
   },
   "loglik": {
-    "A_independent": -674.788,
-    "C_one_gamma": -571.053,
-    "P_pairwise": -534.748
+    "A_independent": -725.444,
+    "C_one_gamma": -610.533,
+    "P_pairwise": -569.478
   },
   "aic": {
-    "A_independent": 1359.58,
-    "C_one_gamma": 1154.11,
-    "P_pairwise": 1099.5
+    "A_independent": 1460.89,
+    "C_one_gamma": 1233.07,
+    "P_pairwise": 1168.96
   },
-  "one_gamma": 1.82679516815509,
-  "one_gamma_p_value": 4.8937008547618325e-47,
-  "pairwise_p_value_vs_independent": 2.503931541221615e-54,
-  "pairwise_p_value_vs_one_gamma": 4.677485261072406e-12,
+  "one_gamma": 1.9114156854683142,
+  "one_gamma_p_value": 6.520433042539845e-52,
+  "pairwise_p_value_vs_independent": 4.6547364448382865e-61,
+  "pairwise_p_value_vs_one_gamma": 6.147588345346429e-14,
   "couplings_at_bound": [
-    "elongate -> digitless",
     "digitless -> elongate"
   ],
   "gain_per_100_Myr": {
-    "elongate": 0.0454,
-    "digits reduced": 0.0771,
-    "digitless": 0.0051,
-    "fossorial": 0.0465
+    "elongate": 0.0503,
+    "digits reduced": 0.0623,
+    "digitless": 0.1987,
+    "fossorial": 0.0408
   },
-  "loss_per_100_Myr": 0.22251234157817104,
+  "loss_per_100_Myr": 0.21621043612021126,
   "Gamma_from_row_to_column": {
     "elongate": {
       "elongate": 0.0,
-      "digits reduced": 1.82,
-      "digitless": 6.0,
-      "fossorial": 2.88
+      "digits reduced": 2.2,
+      "digitless": 2.0,
+      "fossorial": 3.33
     },
     "digits reduced": {
-      "elongate": 3.52,
+      "elongate": 3.1,
       "digits reduced": 0.0,
       "digitless": 0.0,
-      "fossorial": 0.2
+      "fossorial": -0.19
     },
     "digitless": {
       "elongate": 6.0,
       "digits reduced": 0.0,
       "digitless": 0.0,
-      "fossorial": 1.23
+      "fossorial": 1.14
     },
     "fossorial": {
-      "elongate": 2.57,
-      "digits reduced": 3.38,
-      "digitless": -0.37,
+      "elongate": 2.94,
+      "digits reduced": 3.35,
+      "digitless": 0.07,
       "fossorial": 0.0
     }
   },
   "first_step_from_ancestor": {
-    "R": 0.456,
-    "F": 0.275,
-    "E": 0.268
+    "R": 0.406,
+    "E": 0.328,
+    "F": 0.266
   },
   "routes_to_snake_like": {
-    "digits reduced → elongate → digitless": 0.674,
-    "elongate → digits reduced → digitless": 0.324,
-    "digits reduced → digitless → elongate": 0.002
+    "digits reduced → elongate → digitless": 0.52,
+    "elongate → digits reduced → digitless": 0.422,
+    "digits reduced → digitless → elongate": 0.058
   },
   "fossorial_before_elongate": {
-    "elongate first": 0.698,
-    "fossorial first": 0.302
+    "elongate first": 0.711,
+    "fossorial first": 0.289
   },
-  "mean_time_to_snake_like_Myr": 808.9298222506635,
+  "mean_time_to_snake_like_Myr": 874.0215336669747,
   "stationary_top": {
-    "ERZF": 0.802,
-    "ERF": 0.117,
-    "ERZ": 0.055,
-    "ER": 0.012,
+    "ERZF": 0.805,
+    "ERF": 0.105,
+    "ERZ": 0.062,
+    "ER": 0.014,
     "0": 0.006
   },
-  "bottleneck_conductance": 1.0496019470225492e-05,
+  "bottleneck_conductance": 9.053669997607856e-06,
   "bottleneck_side": [
     "E",
     "R",

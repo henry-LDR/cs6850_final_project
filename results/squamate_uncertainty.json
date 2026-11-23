@@ -1,0 +1,248 @@
+{
+  "method": "Hessian normal approximation, 60 parameter draws x 10 stochastic maps each",
+  "coupling_multipliers": {
+    "elongate -> digits reduced": {
+      "multiplier": 17.69,
+      "ci95": [
+        8.31,
+        37.64
+      ]
+    },
+    "elongate -> digitless": {
+      "multiplier": 403.43,
+      "ci95": "at least 400 (at bound)"
+    },
+    "elongate -> fossorial": {
+      "multiplier": 17.85,
+      "ci95": [
+        8.78,
+        36.31
+      ]
+    },
+    "digits reduced -> elongate": {
+      "multiplier": 13.6,
+      "ci95": [
+        4.94,
+        37.49
+      ]
+    },
+    "digits reduced -> fossorial": {
+      "multiplier": 1.47,
+      "ci95": [
+        0.51,
+        4.23
+      ]
+    },
+    "digitless -> elongate": {
+      "multiplier": 403.43,
+      "ci95": "at least 400 (at bound)"
+    },
+    "digitless -> fossorial": {
+      "multiplier": 0.57,
+      "ci95": [
+        0.24,
+        1.37
+      ]
+    },
+    "fossorial -> elongate": {
+      "multiplier": 15.58,
+      "ci95": [
+        5.89,
+        41.22
+      ]
+    },
+    "fossorial -> digits reduced": {
+      "multiplier": 15.69,
+      "ci95": [
+        7.39,
+        33.35
+      ]
+    },
+    "fossorial -> digitless": {
+      "multiplier": 0.91,
+      "ci95": [
+        0.38,
+        2.17
+      ]
+    }
+  },
+  "parameters": {
+    "log gain elongate": {
+      "estimate": -2.486,
+      "se": 0.225,
+      "ci95": [
+        -2.927,
+        -2.044
+      ]
+    },
+    "log gain digits reduced": {
+      "estimate": -3.049,
+      "se": 0.213,
+      "ci95": [
+        -3.465,
+        -2.632
+      ]
+    },
+    "log gain digitless": {
+      "estimate": -5.069,
+      "se": 0.351,
+      "ci95": [
+        -5.757,
+        -4.381
+      ]
+    },
+    "log gain fossorial": {
+      "estimate": -2.671,
+      "se": 0.192,
+      "ci95": [
+        -3.047,
+        -2.295
+      ]
+    },
+    "log loss": {
+      "estimate": -1.285,
+      "se": 0.133,
+      "ci95": [
+        -1.546,
+        -1.025
+      ]
+    },
+    "Gamma elongate -> digits reduced": {
+      "estimate": 2.873,
+      "se": 0.385,
+      "ci95": [
+        2.118,
+        3.628
+      ]
+    },
+    "Gamma elongate -> digitless": {
+      "estimate": 6.0,
+      "at_bound": true
+    },
+    "Gamma elongate -> fossorial": {
+      "estimate": 2.882,
+      "se": 0.362,
+      "ci95": [
+        2.172,
+        3.592
+      ]
+    },
+    "Gamma digits reduced -> elongate": {
+      "estimate": 2.61,
+      "se": 0.517,
+      "ci95": [
+        1.597,
+        3.624
+      ]
+    },
+    "Gamma digits reduced -> fossorial": {
+      "estimate": 0.384,
+      "se": 0.54,
+      "ci95": [
+        -0.674,
+        1.442
+      ]
+    },
+    "Gamma digitless -> elongate": {
+      "estimate": 6.0,
+      "at_bound": true
+    },
+    "Gamma digitless -> fossorial": {
+      "estimate": -0.559,
+      "se": 0.444,
+      "ci95": [
+        -1.43,
+        0.312
+      ]
+    },
+    "Gamma fossorial -> elongate": {
+      "estimate": 2.746,
+      "se": 0.496,
+      "ci95": [
+        1.773,
+        3.719
+      ]
+    },
+    "Gamma fossorial -> digits reduced": {
+      "estimate": 2.753,
+      "se": 0.384,
+      "ci95": [
+        2.0,
+        3.507
+      ]
+    },
+    "Gamma fossorial -> digitless": {
+      "estimate": -0.09,
+      "se": 0.443,
+      "ci95": [
+        -0.958,
+        0.777
+      ]
+    }
+  },
+  "derived_95_intervals": {
+    "time_to_snake_like_Myr": [
+      544.9303,
+      671.4699,
+      912.7588
+    ],
+    "elongate_first_route_share": [
+      0.4806,
+      0.6285,
+      0.7646
+    ],
+    "ancestor_mean_stay_Myr": [
+      447.2105,
+      510.37,
+      566.2002
+    ],
+    "journey_median_Myr": [
+      33.0066,
+      36.4118,
+      40.924
+    ],
+    "origins": [
+      43.1475,
+      47.2,
+      53.5
+    ],
+    "elongate_before_digit_loss": [
+      0.5658,
+      0.7101,
+      0.8599
+    ],
+    "biased_walk_steps": [
+      55.9032,
+      60.4021,
+      65.3405
+    ],
+    "walk_speedup": [
+      2.3881,
+      2.5831,
+      2.791
+    ]
+  },
+  "gain_to_loss_ratio_95_intervals": {
+    "elongate": [
+      1.5841,
+      1.9098,
+      2.232
+    ],
+    "digits reduced": [
+      5.4449,
+      7.0811,
+      8.6315
+    ],
+    "digitless": [
+      2.5535,
+      3.1814,
+      4.3239
+    ],
+    "fossorial": [
+      2.9677,
+      3.3151,
+      3.8161
+    ]
+  },
+  "unbiased_walk_steps": 156.02203917000105
+}

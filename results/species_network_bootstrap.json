@@ -1,0 +1,62 @@
+{
+  "replicates": 200,
+  "species_kept_per_replicate": 1160,
+  "intervals_95": {
+    "conductance": [
+      0.002,
+      0.003,
+      0.0041
+    ],
+    "next_best_conductance": [
+      0.3401,
+      0.3714,
+      0.3804
+    ],
+    "snake_like_share": [
+      0.1388,
+      0.1491,
+      0.1578
+    ],
+    "snake_like_families": [
+      11.975,
+      14.0,
+      15.0
+    ],
+    "snake_like_lineages": [
+      23.0,
+      26.0,
+      29.0
+    ],
+    "bridge_species_share": [
+      0.0147,
+      0.0181,
+      0.0207
+    ],
+    "bridge_lineages": [
+      4.0,
+      6.0,
+      6.0
+    ],
+    "jaccard_with_full_cut": [
+      0.9875,
+      1.0,
+      1.0
+    ],
+    "clustering_ratio": [
+      14.8782,
+      16.027,
+      17.2545
+    ],
+    "path_ratio": [
+      1.3443,
+      1.363,
+      1.3824
+    ],
+    "convergence_links_per_1000_species": [
+      466.2716,
+      499.1379,
+      532.7586
+    ]
+  },
+  "share_of_replicates_with_same_cut_jaccard_over_0.9": 1.0
+}

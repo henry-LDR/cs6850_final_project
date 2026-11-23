@@ -1,8 +1,8 @@
 """Squamates: how lizards became snake-like, as a biased walk on a constrained hypercube.
 
-Data: digits, presacral vertebrae and habitat for 1,386 squamate species
-(Dryad doi:10.5061/dryad.crjdfn3g7, coded on the Zheng and Wiens 2016 tree).
-We code four binary traits:
+Data: data/processed/squamates_merged.csv (built by data/build_squamates.py from five
+sources on the Title et al. 2024 tree; 6,885 species with at least one trait). Four
+binary traits per species, unknown values allowed:
 
     bit 0  elongate        at least 35 presacral vertebrae (fully digited species
                            average 26, sd 4.6; no digitless species has fewer than 37)
@@ -12,13 +12,11 @@ We code four binary traits:
 
 Digitless implies digits reduced, so the 4 states that are digitless but not
 reduced are removed: the state graph is the 4-cube with those nodes deleted,
-12 body plans. The root (shared with Sphenodon, the outgroup) is 0000.
+12 body plans. The root (the squamate ancestor) is 0000, an ordinary lizard.
 
-Tree: the Zheng and Wiens (2016) time tree is used if data/raw/squamate_tree_zw2016.nexus
-exists. Otherwise we use a provisional 4,162-tip time tree from github.com/uyedaj/bmr
-(datasets/squa.tre). Its crown age (174 Ma) differs from Zheng and Wiens (205 Ma), so it
-is a different published tree, probably Pyron and Burbrink (2014). Branch lengths are in
-units of 100 million years.
+Tree: Title et al. (2024), branch lengths in units of 100 million years.
+SQUAMATE_TREE=zw2016 reruns on the Zheng and Wiens (2016) tree with the original
+convergence dataset alone (robustness check; results get a _zw2016 suffix).
 
 Models (nested, compared by likelihood-ratio tests):
   A  independent traits: 4 gain rates, 1 shared loss rate
@@ -30,8 +28,7 @@ On the best model we ask: which routes lead from 0000 to the snake-like form
 (elongate and digitless), how long that takes, where the stationary
 distribution sits, and where the conductance bottleneck of the walk is.
 
-Run from the repository root after python data/fetch.py and copying the Dryad
-spreadsheet to data/raw/squamate_traits.xlsx.
+Run from the repository root after python data/build_squamates.py.
 """
 
 import itertools

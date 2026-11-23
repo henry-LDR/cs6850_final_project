@@ -21,7 +21,7 @@ w = exp(-d^2 / 2h^2), the standard spectral-clustering construction) we take the
 Cheeger sweep cut. We then use the tree to ask how many unrelated lineages are on
 each side and which species bridge the cut.
 
-Run from the repository root after python data/fetch.py (and the hand-downloaded
+Run from the repository root after python data/build_squamates.py (with the hand-downloaded
 squamate files, see data/README.md).
 """
 

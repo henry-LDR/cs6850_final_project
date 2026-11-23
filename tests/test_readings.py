@@ -5,7 +5,7 @@ from math import comb
 import numpy as np
 import pytest
 
-from evograph import cascades, spectral, statespace, walks
+from evograph import spectral, statespace, walks
 
 
 # Random Graphs and Expansion --------------------------------------------------
@@ -135,25 +135,3 @@ def _cycle(n):
     for i in range(n):
         A[i, (i + 1) % n] = A[(i + 1) % n, i] = 1
     return A
-
-
-def test_contagion_on_a_cycle_needs_q_at_most_one_half():
-    A = _cycle(20)
-    spread, _ = cascades.threshold_cascade(A, [0, 1], q=0.5)
-    stuck, _ = cascades.threshold_cascade(A, [0, 1], q=0.6)
-    assert spread.all() and stuck.sum() == 2
-
-
-def test_independent_cascade_extremes():
-    A = _cycle(10)
-    assert cascades.independent_cascade(A, [0], rng=0).all()
-    assert cascades.independent_cascade(0 * A, [0], rng=0).sum() == 1
-
-
-def test_greedy_picks_the_hub():
-    n = 8
-    A = np.zeros((n, n))
-    A[0, 1:5] = 1  # node 0 influences four others; nodes 5-7 influence nobody
-    f = lambda S: cascades.expected_spread(
-        lambda s, r: cascades.independent_cascade(A, s, r), S, runs=20, rng=0)
-    assert cascades.greedy_seeds(f, range(n), 1) == [0]

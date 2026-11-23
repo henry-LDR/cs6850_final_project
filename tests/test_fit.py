@@ -54,3 +54,22 @@ def test_dense_and_sparse_paths_agree():
     dense = fit.log_likelihood(model, parent, length, data)
     sparse = fit.log_likelihood(model, parent, length, data, dense_limit=0)
     assert np.isclose(dense, sparse, rtol=1e-6)
+
+
+def test_tip_vector_error():
+    exact = fit.tip_vector([1, 0, 2], 3)
+    assert np.allclose(exact, fit.tip_vector([1, 0, 2], 3, error=0.0))
+    noisy = fit.tip_vector([1, 0, 2], 3, error=0.1)
+    # state 0b001 matches both known traits; 0b000 misses one; 0b010 misses both
+    assert np.isclose(noisy[0b001], 0.81) and np.isclose(noisy[0b000], 0.09) and np.isclose(noisy[0b010], 0.01)
+
+
+def test_uniformization_matches_expm():
+    import scipy.linalg as sla
+    k = 5
+    model = walks.TraitModel(np.linspace(0.5, 3, k), [0.4] * k, gamma=0.6, D=np.ones((k, k)) - np.eye(k))
+    Q = model.generator()
+    L = np.random.default_rng(0).random(2**k)
+    f = fit._uniformization(Q.tocsr())
+    for t in (0.01, 1.0, 20.0):
+        assert np.allclose(f(0, t, L), sla.expm(Q.toarray() * t) @ L, rtol=1e-10)

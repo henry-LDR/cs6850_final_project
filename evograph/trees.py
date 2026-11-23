@@ -79,6 +79,24 @@ def read_newick(text):
     return np.array(parent), np.array(length), names
 
 
+def read_nexus(text):
+    """First tree in a NEXUS file, applying its TRANSLATE table if it has one."""
+    import re
+
+    body = text[text.lower().index("begin trees") :]
+    names = {}
+    m = re.search(r"translate(.*?);", body, re.S | re.I)
+    if m:
+        for entry in m.group(1).split(","):
+            parts = entry.strip().split(None, 1)
+            if len(parts) == 2:
+                names[parts[0]] = parts[1].strip().strip("'\"")
+    tree = re.search(r"\btree\s+[^=]+=\s*(?:\[[^\]]*\]\s*)?(.*?;)", body, re.S | re.I).group(1)
+    tree = re.sub(r"\[[^\]]*\]", "", tree)  # drop comments such as [&R]
+    parent, length, labels = read_newick(tree)
+    return parent, length, [names.get(x, x) for x in labels]
+
+
 def rescale(length, parent, height=1.0):
     """Scale branch lengths so the deepest tip sits at the given height above the root."""
     depth = np.zeros(len(parent))

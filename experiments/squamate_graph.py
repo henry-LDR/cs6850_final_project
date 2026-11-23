@@ -86,9 +86,10 @@ def main():
     sup = str(e).translate(str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹"))
     ax.text(0.5, 2.5, f"Cheeger cut: conductance {phi / 10**e:.0f} × 10{sup}",
             ha="center", va="bottom", fontsize=8, color=ACCENT)
-    ax.text(-0.02, -0.85, "Mean stay before\nany change:\n≈ 590 Myr, longer than\nall of squamate history",
+    ax.text(-0.02, -0.85, f"Mean stay before\nany change:\n≈ {round(wait['0'], -1):.0f} Myr, longer than\nsquamates have existed",
             ha="center", va="top", fontsize=7.5, color=INK, linespacing=1.3)
-    ax.text(4, -0.6, "snake-like,\nburrowing\n(80% of long-run mass)", ha="center", va="top", fontsize=7, color=MUTED)
+    share = summary["stationary_top"].get("ERZF", 0)
+    ax.text(4, -0.6, f"snake-like,\nburrowing\n({100 * share:.0f}% of long-run mass)", ha="center", va="top", fontsize=7, color=MUTED)
 
     ax.text(-0.35, 3.05, "Squamate body plans: leaving the ancestral lizard form is the bottleneck",
             fontsize=11, color=INK, ha="left", va="bottom")

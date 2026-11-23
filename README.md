@@ -9,7 +9,7 @@ Snake-like bodies (long trunks, reduced or absent limbs) evolved dozens of times
 - **Random walks on the dated tree**: how long lineages spend at each step (time bottlenecks), and a walk biased by evolution's observed direction.
 - **Drivers and what-ifs**: environmental effects backed out from the tree set the walk's parameters under habitat change.
 
-We do not propose a new evolutionary model; a standard trait model (dependent binary traits on a tree, as in Pagel 1994 and HyperTraPS) is used only to date and orient changes for the network analysis. The 3-page progress writeup is [`docs/writeup.pdf`](docs/writeup.pdf).
+We do not propose a new evolutionary model; a standard trait model (dependent binary traits on a tree, as in Pagel 1994 and HyperTraPS) is used only to date and orient changes for the network analysis. The 3-page progress writeup is [`docs/writeup.pdf`](docs/writeup.pdf); a plain-language guide for readers new to evolution and graph algorithms is [`docs/explainer.pdf`](docs/explainer.pdf).
 
 ## Results so far (95% intervals)
 

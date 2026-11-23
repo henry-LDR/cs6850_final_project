@@ -17,3 +17,5 @@ docs/*.log
 docs/*.out
 results/*.log
 results/*_cache.json
+docs/*.fls
+docs/*.fdb_latexmk

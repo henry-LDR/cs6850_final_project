@@ -16,7 +16,7 @@ We do not propose a new evolutionary model; a standard trait model (dependent bi
 | Finding | Result | Output |
 | --- | --- | --- |
 | Data | Five sources merged on the Title et al. (2024) tree: 2,403 species with digit and vertebra counts (1,451 lizards). Vertebral counts agree across sources at Spearman 0.99 | `results/squamates_data_quality.json` |
-| Small world | Clustering 16× that of a random graph with the same density (15–17), mean path 1.36× (1.34–1.38); 720 convergence links join look-alikes whose ancestors split over 100 Myr ago | `results/species_network.json`, `results/species_network_bootstrap.json` |
+| Small world | Clustering 18× that of a random graph with the same density (15–17× in 80% subsamples), mean path 1.39×; 720 convergence links join look-alikes whose ancestors split over 100 Myr ago | `results/species_network.json`, `results/species_network_bootstrap.json` |
 | Convergence bottleneck | One Cheeger cut, conductance 0.003 (0.002–0.004) vs 0.38 for the next best, splits 217 snake-like lizards (15 families, about 30 lineages) from 1,234 limbed ones; 26 bridge species (*Lerista*, *Brachymeles*, *Bachia*...) span it. Same cut in 200 of 200 species resamples, with snakes added, and on the Zheng and Wiens (2016) tree | `results/species_network.png` |
 | Time bottleneck | Ordinary lizards wait 510 Myr (447–566) before any change, longer than squamates have existed (206 Myr); once started, a lineage becomes snake-like in 36 Myr (33–41). About 47 independent origins (43–54) | `results/squamate_time.json`, `results/squamate_uncertainty.json` |
 | Direction | Every trait is gained more often than lost (1.9–7.1×); a walk tilted by those ratios reaches the snake-like community 2.6× faster than an unbiased walk (2.4–2.8) | `results/species_walk.png` |
@@ -64,7 +64,7 @@ Robustness: `NETWORK_SPECIES=all` keeps snakes in the network; `SQUAMATE_TREE=zw
 | `docs/` | Roadmap (Nov 16) and the progress writeup |
 | `tests/` | Tests of the library against the course readings and of the fitter |
 
-Earlier explorations (TB drug resistance, bacterial phenotypes, percolation on hypercubes) were removed from `main`; they remain at the git tag `before-squamate-focus`.
+Earlier explorations (TB drug resistance, bacterial phenotypes, percolation on hypercubes) were removed from `main`; they remain on the branch `archive/before-squamate-focus`.
 
 ## Prior work
 

@@ -51,13 +51,14 @@ def main():
     fig.tight_layout()
     fig.savefig(OUT / "slide_cut.png", facecolor=fig.get_facecolor())
     drivers_compact()
+    drivers_compact("Moist forest", "paper_drivers.png")
 
 
-def drivers_compact():
+def drivers_compact(forest_label="Rainforest", out="slide_drivers.png"):
     import json
     u = json.loads((OUT / "squamate_uncertainty.json").read_text())["coupling_multipliers"]
     rows = [("Burrowing", "elongation", u["fossorial -> elongate"]), ("Burrowing", "digit reduction", u["fossorial -> digits reduced"])]
-    for env, label in (("desert", "Desert"), ("moist_forest", "Rainforest")):
+    for env, label in (("desert", "Desert"), ("moist_forest", forest_label)):
         c = json.loads((OUT / f"squamate_driver_{env}.json").read_text())["couplings"]
         rows += [(label, "elongation", c[f"{env} -> elongate"]), (label, "digit reduction", c[f"{env} -> digits reduced"])]
     fig, ax = plt.subplots(figsize=(7.16, 4.24), dpi=200)
@@ -87,7 +88,7 @@ def drivers_compact():
         ax.spines[s].set_visible(False)
     ax.spines["bottom"].set_color("#b5b4ae")
     fig.tight_layout()
-    fig.savefig(OUT / "slide_drivers.png", facecolor=fig.get_facecolor())
+    fig.savefig(OUT / out, facecolor=fig.get_facecolor())
 
 
 if __name__ == "__main__":

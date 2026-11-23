@@ -1,0 +1,71 @@
+{
+  "trait_model": {
+    "time_now_Myr": {
+      "estimate": 693.3768,
+      "ci95": [
+        524.8115,
+        675.4147,
+        835.8343
+      ]
+    },
+    "burrowing_x2_change": {
+      "estimate": -0.2455,
+      "ci95": [
+        -0.3148,
+        -0.2438,
+        -0.184
+      ]
+    },
+    "burrowing_half_change": {
+      "estimate": 0.2361,
+      "ci95": [
+        0.1589,
+        0.2336,
+        0.3599
+      ]
+    },
+    "burrow_first_now": {
+      "estimate": 0.381,
+      "ci95": [
+        0.266,
+        0.3795,
+        0.55
+      ]
+    },
+    "burrow_first_x2": {
+      "estimate": 0.552,
+      "ci95": [
+        0.423,
+        0.5535,
+        0.7191
+      ]
+    },
+    "burrow_first_half": {
+      "estimate": 0.233,
+      "ci95": [
+        0.1549,
+        0.228,
+        0.381
+      ]
+    }
+  },
+  "species_network_walk": {
+    "burrowing_lizards_now": 206,
+    "moved_into_burrowing": 249,
+    "steps_now": [
+      53.3512,
+      53.8032,
+      54.394
+    ],
+    "steps_scenario": [
+      45.6648,
+      46.1315,
+      46.8263
+    ],
+    "change": [
+      -0.1448,
+      -0.1423,
+      -0.1385
+    ]
+  }
+}

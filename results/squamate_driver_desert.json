@@ -1,0 +1,152 @@
+{
+  "driver": "desert",
+  "biome": "Deserts & Xeric Shrublands",
+  "share_of_species_now": 0.1763901549680948,
+  "loglik_with_couplings": -4045.5977321875407,
+  "loglik_without": -4069.4894205740325,
+  "likelihood_ratio": 47.7833767729835,
+  "p_value_df8": 1.0867687713521751e-07,
+  "couplings": {
+    "desert -> elongate": {
+      "multiplier": 0.605,
+      "ci95": [
+        0.234,
+        1.565
+      ]
+    },
+    "desert -> digits reduced": {
+      "multiplier": 0.271,
+      "ci95": [
+        0.053,
+        1.382
+      ]
+    },
+    "desert -> digitless": {
+      "multiplier": 0.118,
+      "ci95": [
+        0.001,
+        24.541
+      ]
+    },
+    "desert -> fossorial": {
+      "multiplier": 1.341,
+      "ci95": [
+        0.812,
+        2.216
+      ]
+    },
+    "elongate -> desert": {
+      "multiplier": 2.758,
+      "ci95": [
+        1.364,
+        5.577
+      ]
+    },
+    "digits reduced -> desert": {
+      "multiplier": 0.78,
+      "ci95": [
+        0.196,
+        3.108
+      ]
+    },
+    "digitless -> desert": {
+      "multiplier": 1.05,
+      "ci95": [
+        0.336,
+        3.277
+      ]
+    },
+    "fossorial -> desert": {
+      "multiplier": 0.772,
+      "ci95": [
+        0.505,
+        1.18
+      ]
+    }
+  },
+  "what_ifs": {
+    "time_now_Myr": {
+      "estimate": 641.0597,
+      "ci95": [
+        524.3754,
+        628.1035,
+        765.0793
+      ]
+    },
+    "time_start_outside_Myr": {
+      "estimate": 639.9489,
+      "ci95": [
+        523.5837,
+        627.4567,
+        764.7912
+      ]
+    },
+    "time_start_inside_Myr": {
+      "estimate": 646.2462,
+      "ci95": [
+        524.4517,
+        631.427,
+        766.4247
+      ]
+    },
+    "exposure_none_change": {
+      "estimate": -0.0017,
+      "ci95": [
+        -0.0036,
+        -0.0012,
+        0.002
+      ]
+    },
+    "exposure_double_change": {
+      "estimate": 0.0017,
+      "ci95": [
+        -0.002,
+        0.0012,
+        0.0036
+      ]
+    },
+    "exposure_all_change": {
+      "estimate": 0.0081,
+      "ci95": [
+        -0.0096,
+        0.0056,
+        0.0166
+      ]
+    },
+    "entry_rate_doubled_change": {
+      "estimate": 0.0404,
+      "ci95": [
+        -0.0238,
+        0.03,
+        0.0762
+      ]
+    },
+    "exit_rate_doubled_change": {
+      "estimate": -0.0242,
+      "ci95": [
+        -0.0447,
+        -0.0184,
+        0.0152
+      ]
+    }
+  },
+  "species_network_walk": {
+    "species_in_environment": 333,
+    "species_known": 1426,
+    "steps_now": [
+      58.391,
+      63.3649,
+      64.4557
+    ],
+    "steps_with_20pct_more_species_in_environment": [
+      56.6685,
+      67.6662,
+      70.8123
+    ],
+    "change": [
+      -0.0304,
+      0.0686,
+      0.1005
+    ]
+  }
+}
